@@ -19,6 +19,9 @@ public class EncodingFilter implements Filter {
         response.setContentType("text/html");
         response.setCharacterEncoding("UTF-8");
 
+        response.getWriter().println("<h1>Заголовок, общий для всего сайта</h1>");
+        response.getWriter().println("<p>(через EncodingFilter.doFilter)</p>");
+
         chain.doFilter(request, response);
     }
 
