@@ -1,37 +1,35 @@
 package ru.geekbrains;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import javax.servlet.*;
 import java.io.IOException;
+//import java.util.concurrent.atomic.AtomicInteger;
 
 public class FirstServlet implements Servlet {
 
-    private static final Logger logger = LoggerFactory.getLogger(FirstServlet.class);
+    private transient ServletConfig config;
 
-    private ServletConfig servletConfig;
+//    private final AtomicInteger requestCounter = new AtomicInteger();
 
     @Override
-    public void init(ServletConfig servletConfig) throws ServletException {
-        logger.info("FirstServlet is initialized");
-        this.servletConfig = servletConfig;
+    public void init(ServletConfig config) throws ServletException {
+        this.config = config;
     }
 
     @Override
     public ServletConfig getServletConfig() {
-        return null;
+        return config;
     }
 
     @Override
-    public void service(ServletRequest servletRequest, ServletResponse servletResponse) throws ServletException, IOException {
-        logger.info("New request to FirstServlet");
-        servletResponse.getWriter().println("<h1>Hello from servlet!!!</h1>");
+    public void service(ServletRequest req, ServletResponse res) throws ServletException, IOException {
+        getServletConfig().getServletContext().getRequestDispatcher("/page_header").include(req, res);
+
+        res.getWriter().println("<h1>Hello from Servlet!!!</h1>");
     }
 
     @Override
     public String getServletInfo() {
-        return null;
+        return "FirstServlet";
     }
 
     @Override
