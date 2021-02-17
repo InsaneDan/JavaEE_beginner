@@ -23,14 +23,14 @@ public class PageHeaderServlet extends HttpServlet {
 
         // ссылки в виде таблицы
         resp.getWriter().println("<table><tr>");
-        resp.getWriter().println("<td><a href='" + req.getContextPath() + "/http-servlet'>Main</a></td>");
-        resp.getWriter().println("<td><a href='" + req.getContextPath() + "/http-servlet/catalog'>Catalog</a></td>");
-        resp.getWriter().println("<td><a href='" + req.getContextPath() + "/http-servlet/product'>Product</a></td>");
-        resp.getWriter().println("<td><a href='" + req.getContextPath() + "/http-servlet/cart'>Cart</a></td>");
-        resp.getWriter().println("<td><a href='" + req.getContextPath() + "/http-servlet/order'>Order</a></td>");
+        resp.getWriter().println("<td><a href='" + getServletContext().getContextPath() + "/http-servlet'>Main</a></td>");
+        resp.getWriter().println("<td><a href='" + getServletContext().getContextPath() + "/catalog'>Catalog</a></td>");
+        resp.getWriter().println("<td><a href='" + getServletContext().getContextPath() + "/product'>Product</a></td>");
+        resp.getWriter().println("<td><a href='" + getServletContext().getContextPath() + "/cart'>Cart</a></td>");
+        resp.getWriter().println("<td><a href='" + getServletContext().getContextPath() + "/order'>Order</a></td>");
 
         // неверная ссылка (error-page в web.xml привязан )
-        resp.getWriter().println("<td><a href='" + req.getContextPath() + "/err404'>Неверная ссылка (Error page 404)</a></td>");
+        resp.getWriter().println("<td><a href='" + getServletContext().getContextPath() + "/err404'>Неверная ссылка (Error page 404)</a></td>");
 
         //        доступа пока ни к чему нет, нечего запрещать
 //        resp.getWriter().println("<td><a href='" + req.getContextPath() + "/err403'>Error page 403</a></td>");
