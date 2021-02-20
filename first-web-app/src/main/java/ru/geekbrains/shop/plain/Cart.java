@@ -1,4 +1,4 @@
-package ru.geekbrains.shop;
+package ru.geekbrains.shop.plain;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -7,18 +7,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(urlPatterns = "/http-servlet/product")
-public class Product extends HttpServlet {
+@WebServlet(urlPatterns = "/cart")
+public class Cart extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        req.setAttribute("pageHeader", "ОПИСАНИЕ ТОВАРА");
+        req.setAttribute("pageHeader", "КОРЗИНА ЗАКАЗОВ");
         req.setAttribute("pageHeaderLvl", "h2");
         getServletContext().getRequestDispatcher("/page_header").include(req, resp);
 
-        resp.getWriter().println("<p>Здесь будет информация о товаре (product)</p>");
+        resp.getWriter().println("<hr/>");
+        resp.getWriter().println("<p>Здесь будет информация заказанных товарах (Cart)</p>");
 
         getServletContext().getRequestDispatcher("/footer.html").include(req, resp);
+
     }
 }

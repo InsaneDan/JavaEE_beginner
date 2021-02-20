@@ -15,8 +15,8 @@ public class FirstHttpServlet extends HttpServlet {
         // можно было бы создавать объект с параметрами заоловка, включая текст, уровень, размер, шрифт и др.
         // но судя по методичке к следующему уроку, подозреваю, что это не имеет большого смысла
 
-        req.setAttribute("pageHeader", "Главная страница (Main)");  // текст заголовка
-        req.setAttribute("pageHeaderLvl", "h1");                    // уровень заголовка
+        req.setAttribute("pageHeader", "Главная страница (first-http-servlet)");  // текст заголовка
+        req.setAttribute("pageHeaderLvl", "h2");                    // уровень заголовка
         getServletContext().getRequestDispatcher("/page_header").include(req, resp);
 
         resp.getWriter().println("<p>contextPath: " + req.getContextPath() + "</p>");

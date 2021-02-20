@@ -1,4 +1,4 @@
-package ru.geekbrains.shop;
+package ru.geekbrains.shop.plain;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(urlPatterns = "/http-servlet/catalog")
+@WebServlet(urlPatterns = "/catalog")
 public class Catalog extends HttpServlet {
 
     @Override

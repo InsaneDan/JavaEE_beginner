@@ -1,4 +1,4 @@
-package ru.geekbrains.shop;
+package ru.geekbrains.shop.plain;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(urlPatterns = "/http-servlet/order")
+@WebServlet(urlPatterns = "/order")
 public class Order extends HttpServlet {
 
     @Override

@@ -29,15 +29,15 @@ public class PageHeaderServlet extends HttpServlet {
         resp.getWriter().println("<td><a href='" + getServletContext().getContextPath() + "/cart'>Cart</a></td>");
         resp.getWriter().println("<td><a href='" + getServletContext().getContextPath() + "/order'>Order</a></td>");
 
+
+/*
         // неверная ссылка (error-page в web.xml привязан )
         resp.getWriter().println("<td><a href='" + getServletContext().getContextPath() + "/err404'>Неверная ссылка (Error page 404)</a></td>");
-
-        //        доступа пока ни к чему нет, нечего запрещать
-//        resp.getWriter().println("<td><a href='" + req.getContextPath() + "/err403'>Error page 403</a></td>");
+        // доступа пока ни к чему нет, нечего запрещать
+        resp.getWriter().println("<td><a href='" + req.getContextPath() + "/err403'>Error page 403</a></td>");
+*/
 
         resp.getWriter().println("<hr/>");
         resp.getWriter().println("</tr></table>");
-
-
     }
 }

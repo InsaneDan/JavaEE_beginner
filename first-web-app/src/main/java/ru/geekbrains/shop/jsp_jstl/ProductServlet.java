@@ -1,4 +1,4 @@
-package ru.geekbrains;
+package ru.geekbrains.shop.jsp_jstl;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,7 +31,6 @@ public class ProductServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         logger.info(req.getPathInfo());
-        req.getServletContext().getRequestDispatcher("/page_header").include(req, resp);
         if (req.getPathInfo() == null || req.getPathInfo().equals("/")) {
             req.setAttribute("products", productRepository.findAll());
             getServletContext().getRequestDispatcher("/WEB-INF/product.jsp").forward(req, resp);
