@@ -1,24 +1,50 @@
 package ru.geekbrains.controller;
 
+import ru.geekbrains.persist.CartOrder;
+import ru.geekbrains.persist.CartRepository;
 import ru.geekbrains.persist.Product;
 
 import javax.enterprise.context.SessionScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Named
 @SessionScoped
 public class CartController implements Serializable {
 
-    private Map<Long, Product> productMap = new HashMap<>();
+    @Inject
+    private CartRepository cartRepository;
 
-    public String addToCart(Product product) {
-        return "";
+    private CartOrder cartOrder;
+
+    public CartOrder getCartOrder() {
+        return cartOrder;
     }
 
-    public String removeFromCart(Product product) {
-        return "";
+    public void setCartOrder(CartOrder cartOrder) {
+        this.cartOrder = cartOrder;
     }
+
+    public List<CartOrder> getAllCartOrders() {
+        return cartRepository.findAll();
+    }
+
+    public void addToCart(Product product) {
+        this.cartOrder = cartOrder;
+        cartOrder.setQuantitiy(cartOrder.getQuantitiy() + 1);
+//        return "/product_form.xhtml?faces-redirect=true";
+    }
+
+    public void decrementCartOrder(CartOrder cartOrder) {
+        this.cartOrder = cartOrder;
+        cartOrder.setQuantitiy(cartOrder.getQuantitiy() - 1);
+//        return "/product_form.xhtml?faces-redirect=true";
+    }
+
+    public void deleteCartOrder(CartOrder cartOrder) {
+        cartRepository.deleteById(cartOrder.getId());
+    }
+
 }

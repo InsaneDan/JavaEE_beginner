@@ -5,7 +5,7 @@
 
 <h:head>
     <ui:include src="WEB-INF/header.xhtml" />
-    <title>Product form</title>
+    <title>Category form</title>
 </h:head>
 
 <h:body>
@@ -19,29 +19,22 @@
                     <input type="hidden" id="id" name="id"/>
                     <div class="form-group">
                         <label>Name</label>
-                        <h:inputText styleClass="form-control" id="firstName"
-                                     value="#{productController.product.name}"
+                        <h:inputText styleClass="form-control" id="name"
+                                     value="#{categoryController.category.name}"
                                      placeholder="Enter name"/>
                     </div>
                     <div class="form-group">
                         <label>Description</label>
                         <h:inputText styleClass="form-control" id="description"
-                                     value="#{productController.product.description}"
+                                     value="#{categoryController.category.description}"
                                      placeholder="Enter description"/>
-                    </div>
-                    <div class="form-group">
-                        <label>Price</label>
-                        <h:inputText type="number" styleClass="form-control" id="price"
-                                     value="#{productController.product.price}"
-                                     placeholder="Enter price"/>
                     </div>
 
                     <div class="d-flex justify-content-between">
                         <h:commandButton value="Submit" styleClass="btn btn-primary"
-                                         action="#{productController.saveProduct()}"/>
-                        <h:link value="Cancel" styleClass="btn btn-outline-primary" outcome="/product.xhtml" />
+                                         action="#{categoryController.saveCategory()}" />
+                        <h:link value="Cancel" styleClass="btn btn-outline-primary" outcome="/catalog.xhtml" />
                     </div>
-
                 </h:form>
             </div>
         </div>

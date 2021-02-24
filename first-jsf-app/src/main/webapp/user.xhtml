@@ -1,11 +1,12 @@
 <html template="/WEB-INF/template.xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets" lang="en">
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      lang="en">
 
 <h:head>
     <ui:include src="WEB-INF/header.xhtml" />
-    <title>Product list</title>
+    <title>User list</title>
 </h:head>
 
 <h:body>
@@ -14,43 +15,45 @@
 
     <div class="container">
         <div class="row py-2">
-            <h:form id="productListForm">
+            <h:form id="userForm">
                 <div class="col-12">
-                    <h:commandButton value="Add Product" styleClass="btn btn-primary" action="#{productController.createProduct()}"/>
+                    <h:commandButton value="Add User" styleClass="btn btn-primary" action="#{userController.createUser()}"/>
                 </div>
                 <div class="col-12">
-                    <h:dataTable value="#{productController.allProducts}" var="product" styleClass="table table-bordered my-2">
+                    <h:dataTable value="#{userController.allUsers}" var="user" styleClass="table table-bordered my-2">
                         <h:column>
                             <f:facet name="header">Id</f:facet>
-                            #{product.id}
+                            #{user.id}
                         </h:column>
                         <h:column>
-                            <f:facet name="header">Name</f:facet>
-                            #{product.name}
+                            <f:facet name="header">First name</f:facet>
+                            #{user.firstName}
                         </h:column>
                         <h:column>
-                            <f:facet name="header">Description</f:facet>
-                            #{product.description}
+                            <f:facet name="header">Last name</f:facet>
+                            #{user.lastName}
                         </h:column>
                         <h:column>
-                            <f:facet name="header">Price</f:facet>
-                            #{product.price}
+                            <f:facet name="header">E-mail</f:facet>
+                            #{user.email}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Login</f:facet>
+                            #{user.login}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Password</f:facet>
+                            #{user.password}
                         </h:column>
                         <h:column>
                             <f:facet name="header">Actions</f:facet>
                             <h:commandLink id="Edit" styleClass="btn btn-success"
-                                           action="#{productController.editProduct(product)}">
+                                           action="#{userController.editUser(user)}">
                                 <i class="fas fa-edit"></i>
                             </h:commandLink>
                             <h:commandLink id="Delete" styleClass="btn btn-danger"
-                                           action="#{productController.deleteProduct(product)}">
-<!--                                <f:ajax event="click" render="productForm"/>-->
+                                           action="#{userController.deleteUser(user)}">
                                 <i class="fas fa-trash-alt"></i>
-
-                            </h:commandLink>
-                            <h:commandLink id="AddToCart" styleClass="btn btn-success"
-                                           action="#{cartController2.addToCart(product, 1)}">
-                                <i class="fas fa-cart-arrow-down"></i>
                             </h:commandLink>
                         </h:column>
                     </h:dataTable>
