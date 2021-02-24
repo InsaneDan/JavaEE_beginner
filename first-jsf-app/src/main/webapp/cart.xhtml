@@ -17,40 +17,53 @@
         <div class="row py-2">
             <h:form id="cartListForm">
                 <div class="col-12">
-                    <h:dataTable value="#{cartController.allCartOrders}" var="cartOrder" styleClass="table table-bordered my-2">
+                    <h:dataTable value="#{cartController.allCartProducts}" var="cartOrderEntry" styleClass="table table-bordered my-2">
+
+<!--
+                        <p:columns var="colTitles" value="#{cartController.allCartProducts}">
+                            #{cartOrderEntry.key.name}
+                        </p:columns>
+-->
+
                         <h:column>
                             <f:facet name="header">Название товара</f:facet>
-                            #{cartOrder.product.name}
+                            #{cartOrderEntry.key.name}
                         </h:column>
                         <h:column>
                             <f:facet name="header">Описание</f:facet>
-                            #{cartOrder.product.description}
+                            #{cartOrderEntry.key.description}
                         </h:column>
                         <h:column>
                             <f:facet name="header">Цена</f:facet>
-                            #{cartOrder.product.price}
+                            #{cartOrderEntry.key.price}
                         </h:column>
                         <h:column>
                             <f:facet name="header">Количество</f:facet>
-                            #{cartOrder.quantitiy}
+                            #{cartOrderEntry.value}
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">Сумма</f:facet>
+                            #{cartOrderEntry.value * cartOrderEntry.key.price}
                         </h:column>
                         <h:column>
                             <f:facet name="header">Actions</f:facet>
                             <h:commandLink id="Push" styleClass="btn btn-success"
-                                           action="">
-                                <i class="fas fa-edit"></i>
+                                           action="#{cartController.quantifyCartProduct(cartOrderEntry.key, 1)}">
+                                <i class="fas fa-cart-plus"></i>
                             </h:commandLink>
-                            <h:commandLink id="Pull" styleClass="btn btn-warn"
-                                           action="">
-                                <i class="fas fa-edit"></i>
+                            <h:commandLink id="Pull" styleClass="btn btn-warning"
+                                           action="#{cartController.quantifyCartProduct(cartOrderEntry.key, -1)}">
+                                <i class="fas fa-cart-arrow-down"></i>
                             </h:commandLink>
                             <h:commandLink id="Delete" styleClass="btn btn-danger"
-                                           action="">
+                                           action="#{cartController.removeCartProduct(cartOrderEntry.key)}">
                                 <i class="fas fa-trash-alt"></i>
                             </h:commandLink>
                         </h:column>
                     </h:dataTable>
                 </div>
+
+                <p style="text-align:right;">Total: <strong>#{cartController.totalSum}</strong></p>
             </h:form>
         </div>
     </div>

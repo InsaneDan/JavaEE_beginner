@@ -14,7 +14,7 @@ public class User {
     @NotEmpty(message = "Поле не может быть пустым")
     private String lastName;
 
-    //RegExp pattern с тэгом <f:validateRegex pattern="..."> в user_form.xhtml закомментирован
+    // валидатор RegExp pattern с тэгом <f:validateRegex pattern="..."> в user_form.xhtml закомментирован
     @NotEmpty(message = "Поле не может быть пустым")
     @Email(message = "Неверный формат адреса электронной почты: ${validatedValue}",
             regexp = "([^.@]+)(\\.[^.@]+)*@([^.@]+\\.)+([^.@]+)")

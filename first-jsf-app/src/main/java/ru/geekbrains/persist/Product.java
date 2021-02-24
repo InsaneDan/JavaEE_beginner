@@ -1,15 +1,21 @@
 package ru.geekbrains.persist;
 
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotEmpty;
 import java.math.BigDecimal;
 
 public class Product {
 
     private Long id;
 
+    @NotEmpty
     private String name;
 
     private String description;
 
+    @DecimalMin(value = "0.0", inclusive = false)
+    @Digits(integer=10, fraction=2)
     private BigDecimal price;
 
     public Product() {

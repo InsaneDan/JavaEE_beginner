@@ -1,6 +1,5 @@
 package ru.geekbrains.controller;
 
-import ru.geekbrains.persist.CartOrder;
 import ru.geekbrains.persist.CartRepository;
 import ru.geekbrains.persist.Product;
 
@@ -8,7 +7,8 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
-import java.util.*;
+import java.util.List;
+import java.util.Map;
 
 @Named
 @SessionScoped
@@ -17,34 +17,31 @@ public class CartController implements Serializable {
     @Inject
     private CartRepository cartRepository;
 
-    private CartOrder cartOrder;
-
-    public CartOrder getCartOrder() {
-        return cartOrder;
-    }
-
-    public void setCartOrder(CartOrder cartOrder) {
-        this.cartOrder = cartOrder;
-    }
-
-    public List<CartOrder> getAllCartOrders() {
+    public List<Map.Entry<Product, Long>> getAllCartProducts() {
         return cartRepository.findAll();
     }
 
-    public void addToCart(Product product) {
-        this.cartOrder = cartOrder;
-        cartOrder.setQuantitiy(cartOrder.getQuantitiy() + 1);
-//        return "/product_form.xhtml?faces-redirect=true";
+    public void addToCart(Product product, Long quantity) {
+        cartRepository.saveOrUpdate(product, quantity);
     }
 
-    public void decrementCartOrder(CartOrder cartOrder) {
-        this.cartOrder = cartOrder;
-        cartOrder.setQuantitiy(cartOrder.getQuantitiy() - 1);
-//        return "/product_form.xhtml?faces-redirect=true";
+    public void quantifyCartProduct(Product product, Long quantity) {
+        cartRepository.saveOrUpdate(product, quantity);
     }
 
-    public void deleteCartOrder(CartOrder cartOrder) {
-        cartRepository.deleteById(cartOrder.getId());
+    public void removeCartProduct(Product product) {
+        cartRepository.removeFromCart(product);
     }
 
+    public Double getTotalSum() {
+        Double sum = 0D;
+        Long quantity;
+        Double price;
+        for (Map.Entry<Product, Long> order : cartRepository.findAll()) {
+            quantity = order.getValue();
+            price = Double.valueOf(order.getKey().getPrice().toString());
+            sum += quantity * price;
+        }
+        return sum;
+    }
 }

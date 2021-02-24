@@ -19,9 +19,10 @@
                     <input type="hidden" id="id" name="id"/>
                     <div class="form-group">
                         <label>Name</label>
-                        <h:inputText styleClass="form-control" id="firstName"
+                        <h:inputText styleClass="form-control" id="name"
                                      value="#{productController.product.name}"
                                      placeholder="Enter name"/>
+                        <h:message for = "name" style = "color:red" />
                     </div>
                     <div class="form-group">
                         <label>Description</label>
@@ -34,6 +35,7 @@
                         <h:inputText type="number" styleClass="form-control" id="price"
                                      value="#{productController.product.price}"
                                      placeholder="Enter price"/>
+                        <h:message for = "price" style = "color:red" />
                     </div>
 
                     <div class="d-flex justify-content-between">

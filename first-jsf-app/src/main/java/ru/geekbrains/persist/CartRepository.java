@@ -1,51 +1,43 @@
 package ru.geekbrains.persist;
 
-import javax.annotation.PostConstruct;
-import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicLong;
 
 @Named
-@ApplicationScoped
+@SessionScoped
 public class CartRepository implements Serializable {
 
-    private Map<Long, CartOrder> cartMap = new ConcurrentHashMap<>();
+    private Map<Product, Long> cartMap = new ConcurrentHashMap<Product, Long>();
 
     private final AtomicLong identity = new AtomicLong(0);
 
-    @PostConstruct
-    public void init() {
-
-        this.saveOrUpdate(new CartOrder(1L, new Product(1L, "Product  1",
-                "Description of product 1", new BigDecimal(100)), 10L));
-        this.saveOrUpdate(new CartOrder(2L, new Product(2L, "Product  2",
-                "Description of product 2", new BigDecimal(100)), 20L));
+    public List<Map.Entry<Product, Long>> findAll() {
+        Set<Map.Entry<Product, Long>> cartProductsSet =
+                cartMap.entrySet();
+        return new ArrayList<Map.Entry<Product, Long>>(cartProductsSet);
     }
 
-
-    public List<CartOrder> findAll() {
-        return new ArrayList<>(cartMap.values());
-    }
-
-    public CartOrder findById(Long id) {
-        return cartMap.get(id);
-    }
-
-    public void saveOrUpdate(CartOrder cartOrder) {
-        if (cartOrder.getId() == null) {
-            Long id = identity.incrementAndGet();
-            cartOrder.setId(id);
+    public void saveOrUpdate(Product product, Long quantity) {
+        if (cartMap.containsKey(product)) {
+            Long newQuantity = cartMap.get(product) + quantity;
+            if (newQuantity <= 0) {
+                cartMap.remove(product);
+            } else {
+                cartMap.replace(product, newQuantity);
+            }
+        } else {
+            cartMap.put(product, quantity);
         }
-        cartMap.put(cartOrder.getId(), cartOrder);
     }
 
-    public void deleteById(Long id) {
-        cartMap.remove(id);
+    public void removeFromCart(Product product) {
+        cartMap.remove(product);
     }
 }

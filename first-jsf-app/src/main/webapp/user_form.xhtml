@@ -38,8 +38,10 @@
                         <h:inputText type="email" styleClass="form-control" id="email" label="Email"
                                      value="#{userController.user.email}"
                                      required="true"  placeholder="Enter e-mail" >
-<!--                                     validatorMessage="Email is not valid.">-->
-<!--                            <f:validateRegex pattern="([^.@]+)(\.[^.@]+)*@([^.@]+\.)+([^.@]+)" />-->
+<!--
+                                     validatorMessage="Email is not valid.">
+                            <f:validateRegex pattern="([^.@]+)(\.[^.@]+)*@([^.@]+\.)+([^.@]+)" />
+-->
                         </h:inputText>
                         <h:message for = "email" style = "color:red" />
                     </div>
