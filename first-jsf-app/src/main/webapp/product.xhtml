@@ -46,13 +46,13 @@
                             </h:commandLink>
                             <h:commandLink id="Delete" styleClass="btn btn-danger"
                                            action="#{productController.deleteProduct(product)}">
-<!--                                <f:ajax event="click" render="productForm"/>-->
                                 <i class="fas fa-trash-alt"></i>
-
+                                <f:ajax event="action" render="productListForm"/>
                             </h:commandLink>
                             <h:commandLink id="AddToCart" styleClass="btn btn-success"
                                            action="#{cartController.addToCart(product, 1)}">
                                 <i class="fas fa-cart-plus"></i>
+                                <f:ajax event="action" render="productListForm"/>
                             </h:commandLink>
                         </h:column>
                     </h:dataTable>

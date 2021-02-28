@@ -47,19 +47,26 @@
                             <f:facet name="header">Сумма</f:facet>
                             #{cartOrderEntry.value * cartOrderEntry.key.price}
                         </h:column>
+
+<!--при добавлении ajax на элемент commandLink нужен event="action", если элемент commandButton - event="click"-->
+
                         <h:column>
                             <f:facet name="header">Actions</f:facet>
                             <h:commandLink id="Push" styleClass="btn btn-success"
                                            action="#{cartController.quantifyCartProduct(cartOrderEntry.key, 1)}">
                                 <i class="fas fa-cart-plus"></i>
+                                <!--<f:ajax event="click" render="cartListForm"/>-->
+                                <f:ajax event="action" render="cartListForm"/>
                             </h:commandLink>
                             <h:commandLink id="Pull" styleClass="btn btn-warning"
                                            action="#{cartController.quantifyCartProduct(cartOrderEntry.key, -1)}">
                                 <i class="fas fa-cart-arrow-down"></i>
+                                <f:ajax event="action" render="cartListForm"/>
                             </h:commandLink>
                             <h:commandLink id="Delete" styleClass="btn btn-danger"
                                            action="#{cartController.removeCartProduct(cartOrderEntry.key)}">
                                 <i class="fas fa-trash-alt"></i>
+                                <f:ajax event="action" render="cartListForm"/>
                             </h:commandLink>
                         </h:column>
                     </h:dataTable>
