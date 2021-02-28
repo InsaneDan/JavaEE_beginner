@@ -1,0 +1,82 @@
+<html template="/WEB-INF/template.xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      lang="en">
+
+<h:head>
+    <ui:include src="WEB-INF/header.xhtml" />
+    <title>User form</title>
+</h:head>
+
+<h:body>
+
+    <ui:include src="WEB-INF/navbar.xhtml">
+        <ui:param name="pageName" value="User"/>
+    </ui:include>
+
+    <div class="container">
+        <div class="row py-2">
+            <div class="col-12">
+                <h:form>
+                    <input type="hidden" id="id" name="id"/>
+                    <div class="form-group row">
+                        <label>First name</label>
+                        <h:inputText type="text" styleClass="form-control" id="firstName"
+                                     value="#{userController.user.firstName}"
+                                     placeholder="Enter first name"/>
+                        <h:message for = "firstName" style = "color:red" />
+                    </div>
+                    <div class="form-group row">
+                        <label>Last name</label>
+                        <h:inputText type="text" styleClass="form-control" id="lastName"
+                                     value="#{userController.user.lastName}"
+                                     placeholder="Enter last name"/>
+                        <h:message for = "lastName" style = "color:red" />
+                    </div>
+                    <div class="form-group row">
+                        <label>E-mail</label>
+                        <h:inputText type="email" styleClass="form-control" id="email" label="Email"
+                                     value="#{userController.user.email}"
+                                     required="true"  placeholder="Enter e-mail" >
+<!--
+                                     validatorMessage="Email is not valid.">
+                            <f:validateRegex pattern="([^.@]+)(\.[^.@]+)*@([^.@]+\.)+([^.@]+)" />
+-->
+                        </h:inputText>
+                        <h:message for = "email" style = "color:red" />
+                    </div>
+                    <div class="form-group row">
+                        <label>Login</label>
+                        <h:inputText type="text" styleClass="form-control" id="login"
+                                     value="#{userController.user.login}"
+                                     placeholder="Enter login"/>
+                        <h:message for = "login" style = "color:red" />
+                    </div>
+                    <div class="form-group row">
+                        <label>Password</label>
+                        <h:inputSecret type="password" styleClass="form-control" id="password"
+                                     value="#{userController.user.password}"
+                                     placeholder="Enter password"/>
+                        <h:message for = "password" style = "color:red" />
+                    </div>
+
+                    <div class="d-flex justify-content-between">
+                        <h:commandButton value="Submit" styleClass="btn btn-primary"
+                                         action="#{userController.saveUser()}"/>
+
+<!--                        <p:commandButton actionListener="#{growlView.showError}" update="growl" value="Error" styleClass="ui-button-danger" style="width: 10rem" />-->
+
+                        <h:link value="Cancel" styleClass="btn btn-outline-primary" outcome="/user.xhtml" />
+                    </div>
+
+                </h:form>
+            </div>
+        </div>
+    </div>
+
+    <ui:include src="WEB-INF/scripts.xhtml" />
+
+</h:body>
+</html>

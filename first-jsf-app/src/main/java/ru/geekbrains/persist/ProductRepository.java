@@ -25,7 +25,7 @@ public class ProductRepository {
         this.saveOrUpdate(new Product(null, "Product  2",
                 "Description of product 2", new BigDecimal(200)));
         this.saveOrUpdate(new Product(null, "Product  3",
-                "Description of product 3", new BigDecimal(200)));
+                "Description of product 3", new BigDecimal(300)));
     }
 
     public List<Product> findAll() {

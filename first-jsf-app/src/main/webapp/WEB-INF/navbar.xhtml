@@ -1,0 +1,58 @@
+<ui:composition
+        xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:composite="http://java.sun.com/jsf/composite"
+        xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:h="http://xmlns.jcp.org/jsf/html"
+        xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+
+    <composite:interface>
+        <composite:attribute name="outcome" />
+        <composite:attribute name="label" />
+    </composite:interface>
+
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
+
+        <span class="navbar-brand mb-0 h1">EShop</span>
+
+        <h:button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                  aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </h:button>
+
+        <!--выделение активной страницы в панели навигации-->
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <!--вариант без передачи параметра pageName-->
+                    <!--<h:link styleClass="nav-link #{view.viewId.contains('main') ? 'active' : ''}" value="Главная" outcome="main" />-->
+                    <h:link styleClass="nav-link #{pageName == 'Main' ? 'active' : ''}" value="Главная" outcome="main" />
+                </li>
+                <li class="nav-item">
+                    <!--<h:link styleClass="nav-link #{view.viewId.contains('catalog') ? 'active' : ''}" value="Каталог" outcome="catalog" />-->
+                    <h:link styleClass="nav-link #{pageName == 'Catalog' ? 'active' : ''}"
+                            value="Каталог" outcome="catalog" />
+                </li>
+                <li class="nav-item">
+                    <!--<h:link styleClass="nav-link #{view.viewId.contains('product') ? 'active' : ''}" value="Продукт" outcome="product" />-->
+                    <h:link styleClass="nav-link #{pageName == 'Product' ? 'active' : ''}"
+                            value="Продукт" outcome="product" />
+                </li>
+                <li class="nav-item">
+                    <!--<h:link styleClass="nav-link #{view.viewId.contains('cart') ? 'active' : ''}" value="Корзина" outcome="cart" />-->
+                    <h:link styleClass="nav-link #{pageName == 'Cart' ? 'active' : ''}"
+                            value="Корзина" outcome="cart" />
+                </li>
+                <li class="nav-item">
+                    <!--<h:link styleClass="nav-link #{view.viewId.contains('user') ? 'active' : ''}" value="Пользователи" outcome="user" />-->
+                    <h:link styleClass="nav-link #{pageName == 'User' ? 'active' : ''}"
+                            value="Пользователи" outcome="user" />
+                </li>
+            </ul>
+            <span class="navbar-text">
+                Search input could be placed here...
+            </span>
+        </div>
+
+    </nav>
+
+</ui:composition>
