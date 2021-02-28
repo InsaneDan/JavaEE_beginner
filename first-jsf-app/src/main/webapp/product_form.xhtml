@@ -10,7 +10,9 @@
 
 <h:body>
 
-    <ui:include src="WEB-INF/navbar.xhtml" />
+    <ui:include src="WEB-INF/navbar.xhtml">
+        <ui:param name="pageName" value="Product"/>
+    </ui:include>
 
     <div class="container">
         <div class="row py-2">
