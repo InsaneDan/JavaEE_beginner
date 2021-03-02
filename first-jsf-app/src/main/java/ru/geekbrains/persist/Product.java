@@ -1,19 +1,32 @@
 package ru.geekbrains.persist;
 
+import javax.persistence.*;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotEmpty;
 import java.math.BigDecimal;
 
+@Entity
+@Table(name = "products")
+@NamedQueries({
+        @NamedQuery(name = "findAll", query = "FROM Product ORDER BY name"),
+        @NamedQuery(name = "countAll", query = "SELECT COUNT(*) FROM Product"),
+        @NamedQuery(name = "deleteById", query = "DELETE FROM Product p WHERE p.id = :id")
+})
 public class Product {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column
     @NotEmpty
     private String name;
 
+    @Column(length = 1024)
     private String description;
 
+    @Column
     @DecimalMin(value = "0.0", inclusive = false)
     @Digits(integer=10, fraction=2)
     private BigDecimal price;
