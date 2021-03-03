@@ -1,6 +1,5 @@
 package ru.geekbrains.controller;
 
-import ru.geekbrains.persist.Category;
 import ru.geekbrains.persist.User;
 import ru.geekbrains.persist.UserRepository;
 

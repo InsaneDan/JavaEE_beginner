@@ -1,7 +1,6 @@
 package ru.geekbrains.controller;
 
 import ru.geekbrains.persist.Category;
-import ru.geekbrains.persist.CategoryRepository;
 import ru.geekbrains.persist.Product;
 import ru.geekbrains.persist.ProductRepository;
 
@@ -26,7 +25,9 @@ public class ProductController implements Serializable {
 
     // предзагрузка списка элементов сущности, чтобы не обращаться несколько раз к базе при загрузке страницы
     public void getData(ComponentSystemEvent cse) {
-        this.products = productRepository.findAll();
+//        this.products = productRepository.findAllNamedQuery();
+//        this.products = productRepository.findAllJpql();
+        this.products = productRepository.findAllProducts();
     }
 
     public Product getProduct() {

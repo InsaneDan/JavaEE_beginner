@@ -9,10 +9,8 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.JoinType;
-import javax.persistence.criteria.Root;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.*;
 import javax.transaction.Transactional;
 import javax.transaction.UserTransaction;
 import java.io.Serializable;
@@ -65,24 +63,25 @@ public class ProductRepository implements Serializable {
         return em.createQuery("FROM Category c WHERE c.id = " + id, Category.class).getSingleResult();
     }
 
-    public List<Product> findAll() {
-/*
-        // через именованные запросы
-        return em.createNamedQuery("findAllProducts", Product.class).getResultList();
-*/
-        // через запрос JPQL
-        return em.createQuery("FROM Product p ORDER BY productName", Product.class).getResultList();
+    public List<Product> findAllNamedQuery() {
+        return em.createNamedQuery("findAllProducts", Product.class).getResultList(); // через именованные запросы
+    }
+    public List<Product> findAllJpql() {
+        return em.createQuery("FROM Product p ORDER BY productName", Product.class).getResultList(); // через запрос JPQL
     }
 
-    /*@TransactionAttribute
-    public List<Product> getAllProducts() {
+    // через Criteria API
+    @Transactional
+    public List<Product> findAllProducts() {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery<Product> query = cb.createQuery(Product.class);
         Root<Product> from = query.from(Product.class);
-        from.fetch("categories", JoinType.LEFT);
-        query.select(from).distinct(true);
-        return em.createQuery(query).getResultList();
-    }*/
+        query.select(from);
+        TypedQuery<Product> q = em.createQuery(query);
+        List<Product> products = q.getResultList();
+
+        return products;
+    }
 
     public Product findById(Long id) {
         return em.find(Product.class, id);

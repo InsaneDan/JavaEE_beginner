@@ -4,7 +4,6 @@ import javax.persistence.*;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Digits;
 import java.math.BigDecimal;
-import java.util.List;
 
 @Entity
 @Table(name = "products")
