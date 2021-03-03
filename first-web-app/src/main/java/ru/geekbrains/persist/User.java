@@ -1,39 +1,21 @@
 package ru.geekbrains.persist;
 
-import java.math.BigDecimal;
-
 public class User {
 
     private Long id;
-
-    private String first_name;
-
-    private String last_name;
-
-    private String birth_date;
-
-    private String phone_number;
-
+    private String firstName;
+    private String lastName;
     private String email;
-
-    private String address;
-
     private String login;
-
     private String password;
 
+    public User() {}
 
-    public User() {
-    }
-
-    public User(Long id, String first_name, String last_name, String birth_date, String phone_number, String email, String address, String login, String password) {
+    public User(Long id, String firstName, String lastName, String email, String login, String password) {
         this.id = id;
-        this.first_name = first_name;
-        this.last_name = last_name;
-        this.birth_date = birth_date;
-        this.phone_number = phone_number;
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.email = email;
-        this.address = address;
         this.login = login;
         this.password = password;
     }
@@ -42,35 +24,47 @@ public class User {
         return id;
     }
 
-    public String getFirst_name() {
-        return first_name;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public String getLast_name() {
-        return last_name;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public String getBirth_date() {
-        return birth_date;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public String getPhone_number() {
-        return phone_number;
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 
     public String getEmail() {
         return email;
     }
 
-    public String getAddress() {
-        return address;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getLogin() {
         return login;
     }
 
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
     public String getPassword() {
         return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

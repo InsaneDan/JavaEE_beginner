@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(urlPatterns = "/order")
+@WebServlet(urlPatterns = "/order/plain")
 public class Order extends HttpServlet {
 
     @Override

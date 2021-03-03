@@ -7,42 +7,19 @@
 <!doctype html>
 <html lang="en">
 
-<head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"/>
-    <title>EShop application</title>
-</head>
+<jsp:include page="header.jsp">
+    <jsp:param name="header" value="Product list"/>
+</jsp:include>
 
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-
-    <a class="navbar-brand" href="#">EShop</a>
-
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="#">List</a>
-            </li>
-        </ul>
-    </div>
-</nav>
+<c:import url="navbar.jsp"/>
 
 <div class="container">
     <div class="row py-2">
         <div class="col-12">
-            <a class="btn btn-primary" href="product_form.jsp">Add Product</a>
+            <c:url value="/product/new" var="productNewUrl" />
+            <a class="btn btn-primary" href="${productNewUrl}">Добавить продукт</a>
         </div>
 
         <div class="col-12">
@@ -81,7 +58,10 @@
                             <c:param name="id" value="${product.id}"/>
                         </c:url>
                         <a class="btn btn-success" href="${productEditUrl}"><i class="fas fa-edit"></i></a>
-                        <a class="btn btn-danger" href="#"><i class="far fa-trash-alt"></i></a>
+                        <c:url value="/product/delete" var="productDeleteUrl">
+                            <c:param name="id" value="${product.id}"/>
+                        </c:url>
+                        <a class="btn btn-danger" href="${productDeleteUrl}"><i class="far fa-trash-alt"></i></a>
                     </td>
                 </tr>
 <%--                <% } %>--%>
@@ -91,6 +71,8 @@
         </div>
     </div>
 </div>
+
+<c:import url="scripts.jsp"/>
 
 </body>
 </html>
