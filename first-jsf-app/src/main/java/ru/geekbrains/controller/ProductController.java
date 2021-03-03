@@ -1,10 +1,13 @@
 package ru.geekbrains.controller;
 
+import ru.geekbrains.persist.Category;
+import ru.geekbrains.persist.CategoryRepository;
 import ru.geekbrains.persist.Product;
 import ru.geekbrains.persist.ProductRepository;
 
 import javax.enterprise.context.SessionScoped;
 import javax.faces.event.ComponentSystemEvent;
+import javax.faces.event.ValueChangeEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
@@ -57,4 +60,10 @@ public class ProductController implements Serializable {
         return "/product.xhtml?faces-redirect=true";
     }
 
+    // используем Method Binding
+    public void changeCategory(ValueChangeEvent e) {
+        String newValue = (String) e.getNewValue();
+        Category newCategory = productRepository.getCategoryForProduct(Long.valueOf(newValue));
+        product.setCategory(newCategory);
+    }
 }

@@ -40,12 +40,10 @@
                             <f:facet name="header">Price</f:facet>
                             #{product.price}
                         </h:column>
-<!--
                         <h:column>
                             <f:facet name="header">Category</f:facet>
-                            #{product.categoryId}
+                            #{product.category.categoryName}
                         </h:column>
--->
                         <h:column>
                             <f:facet name="header">Actions</f:facet>
                             <h:commandLink id="Edit" styleClass="btn btn-success"

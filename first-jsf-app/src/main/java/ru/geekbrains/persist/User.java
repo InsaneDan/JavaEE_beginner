@@ -1,7 +1,6 @@
 package ru.geekbrains.persist;
 
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.Length;
 import javax.persistence.*;
