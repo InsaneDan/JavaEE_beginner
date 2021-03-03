@@ -14,6 +14,8 @@
         <ui:param name="pageName" value="Product"/>
     </ui:include>
 
+    <f:event listener="#{productController.getData}" type="preRenderView"/>
+
     <div class="container">
         <div class="row py-2">
             <h:form id="productListForm">
@@ -28,16 +30,22 @@
                         </h:column>
                         <h:column>
                             <f:facet name="header">Name</f:facet>
-                            #{product.name}
+                            #{product.productName}
                         </h:column>
                         <h:column>
                             <f:facet name="header">Description</f:facet>
-                            #{product.description}
+                            #{product.productDescription}
                         </h:column>
                         <h:column>
                             <f:facet name="header">Price</f:facet>
                             #{product.price}
                         </h:column>
+<!--
+                        <h:column>
+                            <f:facet name="header">Category</f:facet>
+                            #{product.categoryId}
+                        </h:column>
+-->
                         <h:column>
                             <f:facet name="header">Actions</f:facet>
                             <h:commandLink id="Edit" styleClass="btn btn-success"

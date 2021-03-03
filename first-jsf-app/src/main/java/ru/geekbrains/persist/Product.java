@@ -3,15 +3,15 @@ package ru.geekbrains.persist;
 import javax.persistence.*;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Digits;
-import javax.validation.constraints.NotEmpty;
 import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
 @Table(name = "products")
 @NamedQueries({
-        @NamedQuery(name = "findAll", query = "FROM Product ORDER BY name"),
-        @NamedQuery(name = "countAll", query = "SELECT COUNT(*) FROM Product"),
-        @NamedQuery(name = "deleteById", query = "DELETE FROM Product p WHERE p.id = :id")
+        @NamedQuery(name = "findAllProducts", query = "FROM Product ORDER BY productName"),
+        @NamedQuery(name = "countAllProducts", query = "SELECT COUNT(*) FROM Product"),
+        @NamedQuery(name = "deleteProductById", query = "DELETE FROM Product p WHERE p.id = :id")
 })
 public class Product {
 
@@ -19,26 +19,31 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
-    @NotEmpty
-    private String name;
+    @Column(nullable = false)
+    private String productName;
 
-    @Column(length = 1024)
-    private String description;
+    @Column(length = 1024, nullable = false)
+    private String productDescription;
 
-    @Column
+    @Column(nullable = false)
     @DecimalMin(value = "0.0", inclusive = false)
     @Digits(integer=10, fraction=2)
     private BigDecimal price;
 
+    @ManyToOne
+    private Category category;
+//    @Column(nullable = false)
+//    private Long categoryId;
+
     public Product() {
     }
 
-    public Product(Long id, String name, String description, BigDecimal price) {
+    public Product(Long id, String productName, String productDescription, BigDecimal price) {
         this.id = id;
-        this.name = name;
-        this.description = description;
+        this.productName = productName;
+        this.productDescription = productDescription;
         this.price = price;
+//        this.categoryId = categoryId;
     }
 
     public Long getId() { return id; }
@@ -47,20 +52,20 @@ public class Product {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getProductName() {
+        return productName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setProductName(String name) {
+        this.productName = name;
     }
 
-    public String getDescription() {
-        return description;
+    public String getProductDescription() {
+        return productDescription;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setProductDescription(String description) {
+        this.productDescription = description;
     }
 
     public BigDecimal getPrice() {
@@ -69,5 +74,17 @@ public class Product {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+//    public Long getCategoryId() { return categoryId; }
+//
+//    public void setCategoryId(Long categoryId) { this.categoryId = categoryId; }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 }

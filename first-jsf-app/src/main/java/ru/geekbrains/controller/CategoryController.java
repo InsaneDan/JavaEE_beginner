@@ -4,6 +4,7 @@ import ru.geekbrains.persist.Category;
 import ru.geekbrains.persist.CategoryRepository;
 
 import javax.enterprise.context.SessionScoped;
+import javax.faces.event.ComponentSystemEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
@@ -17,6 +18,13 @@ public class CategoryController implements Serializable {
     private CategoryRepository categoryRepository;
 
     private Category category;
+
+    private List<Category> categories;
+
+    // предзагрузка списка элементов сущности, чтобы не обращаться несколько раз к базе при загрузке страницы
+    public void getData(ComponentSystemEvent cse) {
+        this.categories = categoryRepository.findAll();
+    }
 
     public Category getCategory() {
         return category;
@@ -32,7 +40,7 @@ public class CategoryController implements Serializable {
     }
 
     public List<Category> getAllCategories() {
-        return categoryRepository.findAll();
+        return categories; // возвращаем предварительно загруженный список элементов
     }
 
     public String editCategory(Category category) {

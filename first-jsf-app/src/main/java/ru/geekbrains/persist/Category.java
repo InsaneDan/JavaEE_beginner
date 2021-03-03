@@ -1,17 +1,38 @@
 package ru.geekbrains.persist;
 
+import javax.persistence.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+@Entity
+@Table(name = "categories")
+@NamedQueries({
+        @NamedQuery(name = "findAllCategories", query = "FROM Category ORDER BY categoryName"),
+        @NamedQuery(name = "countAllCategories", query = "SELECT COUNT(*) FROM Category"),
+        @NamedQuery(name = "deleteCategoryById", query = "DELETE FROM Category c WHERE c.id = :id")
+})
 public class Category {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
-    private String description;
+
+    @Column
+    private String categoryName;
+
+    @Column(length = 1024)
+    private String categoryDescription;
+
+    @OneToMany(targetEntity=Product.class, cascade=CascadeType.PERSIST, mappedBy="category")
+    public List<Product> products;
 
     public Category() {}
 
-    public Category(Long id, String name, String description) {
+    public Category(Long id, String categoryName, String categoryDescription) {
         this.id = id;
-        this.name = name;
-        this.description = description;
+        this.categoryName = categoryName;
+        this.categoryDescription = categoryDescription;
     }
 
     public Long getId() {
@@ -22,16 +43,23 @@ public class Category {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getCategoryName() {
+        return categoryName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setCategoryName(String name) {
+        this.categoryName = name;
     }
 
-    public String getDescription() { return description; }
+    public String getCategoryDescription() { return categoryDescription; }
 
-    public void setDescription(String description) { this.description = description; }
+    public void setCategoryDescription(String description) { this.categoryDescription = description; }
 
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
+    }
 }

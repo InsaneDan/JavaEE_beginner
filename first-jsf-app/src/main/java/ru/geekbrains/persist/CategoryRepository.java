@@ -1,49 +1,73 @@
 package ru.geekbrains.persist;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
-import java.util.ArrayList;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.transaction.*;
+import java.io.Serializable;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicLong;
 
 @Named
 @ApplicationScoped
-public class CategoryRepository {
+public class CategoryRepository implements Serializable {
 
-    private final Map<Long, Category> categoryMap = new ConcurrentHashMap<>();
+    private static final Logger logger = LoggerFactory.getLogger(CategoryRepository.class);
 
-    private final AtomicLong identity = new AtomicLong(0);
+    @PersistenceContext(unitName = "ds")
+    private EntityManager em;
+
+    @Resource
+    private UserTransaction ut;
 
     @PostConstruct
-    public void init() {
-        this.saveOrUpdate(new Category(null, "Category  1",
-                "Description of category 1"));
-        this.saveOrUpdate(new Category(null, "Category  2",
-                "Description of category 2"));
-        this.saveOrUpdate(new Category(null, "Category  3",
-                "Description of category 3"));
+    public void init() throws Exception {
+        if (countAll() == 0) {
+            try {
+                ut.begin();
+
+                saveOrUpdate(new Category(null, "Category  1",
+                        "Description of category 1"));
+                saveOrUpdate(new Category(null, "Category  2",
+                        "Description of category 2"));
+                saveOrUpdate(new Category(null, "Category  3",
+                        "Description of category 3"));
+
+                ut.commit();
+            } catch (Exception ex) {
+                logger.error("", ex);
+                ut.rollback();
+            }
+        }
     }
 
     public List<Category> findAll() {
-        return new ArrayList<>(categoryMap.values());
+        return em.createNamedQuery("findAllCategories", Category.class).getResultList();
     }
 
     public Category findById(Long id) {
-        return categoryMap.get(id);
+        return em.find(Category.class, id);
     }
 
+    public Long countAll() {
+        return em.createNamedQuery("countAllCategories", Long.class).getSingleResult();
+    }
+
+    @Transactional
     public void saveOrUpdate(Category category) {
         if (category.getId() == null) {
-            Long id = identity.incrementAndGet();
-            category.setId(id);
+            em.persist(category);
         }
-        categoryMap.put(category.getId(), category);
+        em.merge(category);
     }
 
+    @Transactional
     public void deleteById(Long id) {
-        categoryMap.remove(id);
+        em.createNamedQuery("deleteCategoryById").setParameter("id", id).executeUpdate();
     }
 }
