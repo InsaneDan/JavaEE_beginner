@@ -1,31 +1,43 @@
 package ru.geekbrains.persist;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Pattern;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Pattern;
+import org.hibernate.validator.constraints.Length;
+import javax.persistence.*;
 
+@Entity
+@Table(name = "users")
+@NamedQueries({
+        @NamedQuery(name = "findAllUsers", query = "FROM User"),
+        @NamedQuery(name = "countAllUsers", query = "SELECT COUNT(*) FROM User"),
+        @NamedQuery(name = "deleteUserById", query = "DELETE FROM User u WHERE u.id = :id")
+})
 public class User {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotEmpty(message = "Поле не может быть пустым") // валидация в предметной области // validation by contract
+    @Length(min = 2)
+    @Column(nullable = false)
     private String firstName;
 
-    @NotEmpty(message = "Поле не может быть пустым")
+    @Length(min = 2)
+    @Column(nullable = false)
     private String lastName;
 
-    // валидатор RegExp pattern с тэгом <f:validateRegex pattern="..."> в user_form.xhtml закомментирован
-    @NotEmpty(message = "Поле не может быть пустым")
     @Email(message = "Неверный формат адреса электронной почты: ${validatedValue}",
             regexp = "([^.@]+)(\\.[^.@]+)*@([^.@]+\\.)+([^.@]+)")
+    @Column(nullable = false)
     private String email;
 
-    @NotEmpty(message = "Поле не может быть пустым")
+    @Length(min = 2)
+    @Column(nullable = false)
     private String login;
 
-    @NotEmpty(message = "Поле не может быть пустым")
     @Pattern(message = "Пароль должен обязательно содержать цифры, строчные и заглавные буквы.",
             regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^\\w\\s]).{6,}")
+    @Column(nullable = false)
     private String password;
 
     public User() {}

@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet(urlPatterns = "/catalog/plain")
+@WebServlet(urlPatterns = "/catalog")
 public class Catalog extends HttpServlet {
 
     @Override

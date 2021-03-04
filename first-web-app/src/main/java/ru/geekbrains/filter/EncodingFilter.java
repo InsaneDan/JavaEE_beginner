@@ -18,7 +18,10 @@ public class EncodingFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         response.setContentType("text/html");
         response.setCharacterEncoding("UTF-8");
-        request.setCharacterEncoding("UTF-8"); // для корректного отображения кириллицы после получения данных со страницы (get / post)
+
+        response.getWriter().println("<h1>Заголовок, общий для всего сайта</h1>");
+        response.getWriter().println("<p>(через EncodingFilter.doFilter)</p>");
+
         chain.doFilter(request, response);
     }
 

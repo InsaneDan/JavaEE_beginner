@@ -4,6 +4,7 @@ import ru.geekbrains.persist.User;
 import ru.geekbrains.persist.UserRepository;
 
 import javax.enterprise.context.SessionScoped;
+import javax.faces.event.ComponentSystemEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
@@ -17,6 +18,13 @@ public class UserController implements Serializable {
     private UserRepository userRepository;
 
     private User user;
+
+    private List<User> users;
+
+    // предзагрузка списка элементов сущности, чтобы не обращаться несколько раз к базе при загрузке страницы
+    public void getData(ComponentSystemEvent cse) {
+        this.users = userRepository.findAll();
+    }
 
     public User getUser() {
         return user;
@@ -32,7 +40,7 @@ public class UserController implements Serializable {
     }
 
     public List<User> getAllUsers() {
-        return userRepository.findAll();
+        return users; // возвращаем предварительно загруженный список элементов
     }
 
     public String editUser(User user) {
