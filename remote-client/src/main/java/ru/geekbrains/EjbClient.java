@@ -1,6 +1,5 @@
 package ru.geekbrains;
 
-import ru.geekbrains.service.product.ProductService;
 import ru.geekbrains.service.product.ProductServiceRemote;
 
 import javax.naming.Context;
@@ -15,7 +14,6 @@ public class EjbClient {
         Context context = createInitialContext();
 
         String jndiServiceName = "ejb:/first-jsf-app/ProductServiceImpl!ru.geekbrains.service.product.ProductServiceRemote";
-
         ProductServiceRemote productService = (ProductServiceRemote) context.lookup(jndiServiceName);
 
         productService.findAll()

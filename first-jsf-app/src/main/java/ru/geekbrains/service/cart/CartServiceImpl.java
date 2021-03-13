@@ -1,13 +1,9 @@
 package ru.geekbrains.service.cart;
 
-
 import ru.geekbrains.service.product.ProductRepr;
 
 import javax.ejb.Stateful;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Stateful
 public class CartServiceImpl implements CartService {
@@ -16,16 +12,19 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public void addToCart(ProductRepr product, Long quantity) {
-        if (productMap.containsKey(product)) {
-            Long newQuantity = productMap.get(product) + quantity;
-            if (newQuantity <= 0) {
-                productMap.remove(product);
-            } else {
-                productMap.replace(product, newQuantity);
+        Long keyId = product.getId();
+        for (Map.Entry<ProductRepr, Long> prodEntry : productMap.entrySet()) {
+            if (keyId == prodEntry.getKey().getId()) {
+                Long newQuantity = prodEntry.getValue() + quantity;
+                if (newQuantity <= 0) {
+                    productMap.remove(prodEntry.getKey());
+                } else {
+                    productMap.replace(prodEntry.getKey(), newQuantity);
+                }
+                return;
             }
-        } else {
-            productMap.put(product, quantity);
         }
+        productMap.put(product, quantity);
     }
 
     @Override

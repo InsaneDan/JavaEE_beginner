@@ -2,12 +2,8 @@ package ru.geekbrains.service.user;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.geekbrains.persist.Category;
-import ru.geekbrains.persist.CategoryRepository;
 import ru.geekbrains.persist.User;
 import ru.geekbrains.persist.UserRepository;
-import ru.geekbrains.service.category.CategoryRepr;
-import ru.geekbrains.service.category.CategoryService;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
