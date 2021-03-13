@@ -19,33 +19,27 @@
         <div class="row py-2">
             <h:form id="cartListForm">
                 <div class="col-12">
-                    <h:dataTable value="#{cartController_backup.allCartProducts}" var="cartOrderEntry" styleClass="table table-bordered my-2">
-
-<!--
-                        <p:columns var="colTitles" value="#{cartController.allCartProducts}">
-                            #{cartOrderEntry.key.name}
-                        </p:columns>
--->
+                    <h:dataTable value="#{cartController.all}" var="cartOrder" styleClass="table table-bordered my-2">
 
                         <h:column>
                             <f:facet name="header">Название товара</f:facet>
-                            #{cartOrderEntry.key.name}
+                            #{cartOrder.name}
                         </h:column>
                         <h:column>
                             <f:facet name="header">Описание</f:facet>
-                            #{cartOrderEntry.key.description}
+                            #{cartOrder.description}
                         </h:column>
                         <h:column>
                             <f:facet name="header">Цена</f:facet>
-                            #{cartOrderEntry.key.price}
+                            #{cartOrder.price}
                         </h:column>
                         <h:column>
                             <f:facet name="header">Количество</f:facet>
-                            #{cartOrderEntry.value}
+                            #{cartController.getQuantity(cartOrder)}
                         </h:column>
                         <h:column>
                             <f:facet name="header">Сумма</f:facet>
-                            #{cartOrderEntry.value * cartOrderEntry.key.price}
+                            #{cartController.getQuantity(cartOrder) * cartOrder.price}
                         </h:column>
 
 <!--при добавлении ajax на элемент commandLink нужен event="action", если элемент commandButton - event="click"-->
@@ -53,18 +47,18 @@
                         <h:column>
                             <f:facet name="header">Actions</f:facet>
                             <h:commandLink id="Push" styleClass="btn btn-success"
-                                           action="#{cartController_backup.quantifyCartProduct(cartOrderEntry.key, 1)}">
+                                           action="#{cartController.addToCart(cartOrder, 1)}">
                                 <i class="fas fa-cart-plus"></i>
                                 <!--<f:ajax event="click" render="cartListForm"/>-->
                                 <f:ajax event="action" render="cartListForm"/>
                             </h:commandLink>
                             <h:commandLink id="Pull" styleClass="btn btn-warning"
-                                           action="#{cartController_backup.quantifyCartProduct(cartOrderEntry.key, -1)}">
+                                           action="#{cartController.addToCart(cartOrder, -1)}">
                                 <i class="fas fa-cart-arrow-down"></i>
                                 <f:ajax event="action" render="cartListForm"/>
                             </h:commandLink>
                             <h:commandLink id="Delete" styleClass="btn btn-danger"
-                                           action="#{cartController_backup.removeCartProduct(cartOrderEntry.key)}">
+                                           action="#{cartController.removeFromCart(cartOrder)}">
                                 <i class="fas fa-trash-alt"></i>
                                 <f:ajax event="action" render="cartListForm"/>
                             </h:commandLink>
@@ -72,7 +66,7 @@
                     </h:dataTable>
                 </div>
 
-                <p style="text-align:right;">Total: <strong>#{cartController_backup.totalSum}</strong></p>
+                <p style="text-align:right;">Total: <strong>#{cartController.totalSum}</strong></p>
             </h:form>
         </div>
     </div>

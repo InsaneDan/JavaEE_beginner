@@ -16,22 +16,29 @@ import java.util.Map;
 @Named
 @SessionScoped
 public class CartController implements Serializable {
-//
-//    @EJB
-//    private CartService cartService;
-//
-//    // TODO
-//    private final Map<Long, ProductRepr> productMap = new HashMap<>();
-//
-//    public void addToCart(ProductRepr product) {
-//        productMap.put(product.getId(), product);
-//    }
-//
-//    public void removeFromCart(ProductRepr product) {
-//        productMap.remove(product.getId());
-//    }
-//
-//    public List<ProductRepr> getAllProducts() {
-//        return new ArrayList<>(productMap.values());
-//    }
+
+    @EJB
+    private CartService cartService;
+
+    // TODO
+    public void addToCart(ProductRepr product, Long quantity) {
+        cartService.addToCart(product, quantity);
+    }
+
+    public void removeFromCart(ProductRepr product) {
+        cartService.removeFromCart(product);
+    }
+
+    public List<ProductRepr> getAll() {
+        return new ArrayList<>(cartService.getAll());
+    }
+
+    public Long getQuantity(ProductRepr product) {
+        return cartService.getQuantity(product);
+    }
+
+    public Double getTotalSum() {
+        return cartService.getTotalSum();
+    }
+
 }
