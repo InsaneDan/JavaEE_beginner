@@ -13,7 +13,7 @@ import java.math.BigDecimal;
 @Entity
 @Table(name = "products")
 @NamedQueries({
-        @NamedQuery(name = "findAllProducts", query = "FROM Product ORDER BY name"),
+        @NamedQuery(name = "findAllProducts", query = "FROM Product ORDER BY id"),
         @NamedQuery(name = "countAllProducts", query = "SELECT COUNT(*) FROM Product"),
         @NamedQuery(name = "deleteProductById", query = "DELETE FROM Product p WHERE p.id = :id")
 })

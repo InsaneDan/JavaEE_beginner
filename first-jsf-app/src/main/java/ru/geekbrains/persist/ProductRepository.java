@@ -35,9 +35,13 @@ public class ProductRepository implements Serializable {
     public void saveOrUpdate(Product product) {
         logger.info("saveOrUpdate");
         if (product.getId() == null) {
+            logger.info("saveOrUpdate - execute EM.PERSIST(product) - start");
             em.persist(product);
+            logger.info("saveOrUpdate - execute EM.PERSIST(product) - end");
         }
+        logger.info("saveOrUpdate - execute EM.MERGE(product) - start");
         em.merge(product);
+        logger.info("saveOrUpdate - execute EM.MERGE(product) - end");
     }
 
     public void deleteById(Long id) {

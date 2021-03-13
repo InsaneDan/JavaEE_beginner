@@ -28,14 +28,14 @@ public class ProductServiceImpl implements ProductService, ProductServiceRemote 
 
     @Override
     public List<ProductRepr> findAll() {
-        logger.info("findAll ");
+        logger.info("findAll");
         return productRepository.findAll().stream()
                 .map(ProductRepr::new)
                 .collect(Collectors.toList());
     }
 
     private ProductRepr buildProductRepr(Product product) {
-        logger.info("buildProductRepr ");
+        logger.info("buildProductRepr");
         ProductRepr repr = new ProductRepr();
 
         repr.setId(product.getId());
@@ -51,7 +51,7 @@ public class ProductServiceImpl implements ProductService, ProductServiceRemote 
 
     @Override
     public ProductRepr findById(Long id) {
-        logger.info("findById ");
+        logger.info("findById");
         Product product = productRepository.findById(id);
         if (product != null) {
             return buildProductRepr(product);
@@ -61,7 +61,7 @@ public class ProductServiceImpl implements ProductService, ProductServiceRemote 
 
     @Override
     public Long countAll() {
-        logger.info("countAll ");
+        logger.info("countAll");
         return productRepository.countAll();
     }
 
@@ -84,20 +84,20 @@ public class ProductServiceImpl implements ProductService, ProductServiceRemote 
     @TransactionAttribute
     @Override
     public void saveOrUpdate(ProductRepr product) {
-        logger.info("saveOrUpdate ");
+        logger.info("saveOrUpdate");
         Category category = null;
         if (product.getCategoryId() != null) {
-            logger.info("Saving new product");
+            logger.info("Saving product with id {}" , product.getId());
             category = categoryRepository.getReference(product.getCategoryId());
         }
-        logger.info("Saving product with id {}" , product.getId());
+        logger.info("Saving new product");
         productRepository.saveOrUpdate(new Product(product, category));
     }
 
     @TransactionAttribute
     @Override
     public void deleteById(Long id) {
-        logger.info("deleteById ");
+        logger.info("deleteById");
         productRepository.deleteById(id);
     }
 }

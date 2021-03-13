@@ -2,6 +2,7 @@ package ru.geekbrains.persist;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ru.geekbrains.service.CategoryRepr;
 
 import javax.persistence.*;
 import java.util.List;
@@ -39,6 +40,13 @@ public class Category {
         this.id = id;
         this.name = name;
         this.description = description;
+    }
+
+    public Category(CategoryRepr categoryRepr) {
+        logger.info("Constructor with parameters");
+        this.id = categoryRepr.getId();
+        this.name = categoryRepr.getName();
+        this.description = categoryRepr.getDescription();
     }
 
     public Long getId() {

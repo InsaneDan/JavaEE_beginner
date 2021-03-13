@@ -2,6 +2,7 @@ package ru.geekbrains.persist;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ru.geekbrains.service.CategoryRepr;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -32,10 +33,10 @@ public class CategoryRepository implements Serializable {
         return em.find(Category.class, id);
     }
 
-//    public Long countAll() {
-//        logger.info("countAll");
-//        return em.createNamedQuery("countAllCategories", Long.class).getSingleResult();
-//    }
+    public Long countAll() {
+        logger.info("countAll");
+        return em.createNamedQuery("countAllCategories", Long.class).getSingleResult();
+    }
 
     public void saveOrUpdate(Category category) {
         logger.info("saveOrUpdate");
