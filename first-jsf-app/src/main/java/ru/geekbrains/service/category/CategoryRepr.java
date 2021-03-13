@@ -1,13 +1,10 @@
-package ru.geekbrains.service;
+package ru.geekbrains.service.category;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.geekbrains.persist.Category;
-import ru.geekbrains.persist.Product;
 
-import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
 
 // DTO
 public class CategoryRepr implements Serializable {

@@ -17,8 +17,12 @@ public class ProductRepository implements Serializable {
     @PersistenceContext(unitName = "ds")
     private EntityManager em;
 
-    public List<Product> findAll() {
+    public List<Product> findAll(Long ... categoryId) {
         logger.info("findAll");
+        if (categoryId != null) {
+
+            logger.info("findAll");
+        }
         return em.createNamedQuery("findAllProducts", Product.class).getResultList();
     }
 

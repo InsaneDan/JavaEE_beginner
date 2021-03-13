@@ -1,4 +1,4 @@
-package ru.geekbrains.service;
+package ru.geekbrains.service.product;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

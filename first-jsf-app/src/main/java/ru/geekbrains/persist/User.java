@@ -3,6 +3,8 @@ package ru.geekbrains.persist;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.Length;
+import ru.geekbrains.service.user.UserRepr;
+
 import javax.persistence.*;
 
 @Entity
@@ -49,6 +51,15 @@ public class User {
         this.email = email;
         this.login = login;
         this.password = password;
+    }
+
+    public User(UserRepr userRepr) {
+        this.id = userRepr.getId();
+        this.firstName = userRepr.getFirstName();
+        this.lastName = userRepr.getLastName();
+        this.email = userRepr.getEmail();
+        this.login = userRepr.getLogin();
+        this.password = userRepr.getPassword();
     }
 
     public Long getId() {

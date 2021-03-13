@@ -1,21 +1,17 @@
-package ru.geekbrains.service;
+package ru.geekbrains.service.category;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.geekbrains.persist.Category;
 import ru.geekbrains.persist.CategoryRepository;
-import ru.geekbrains.persist.Product;
-import ru.geekbrains.persist.ProductRepository;
 
 import javax.ejb.EJB;
-import javax.ejb.Remote;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Stateless
-//@Remote(ProductServiceRemote.class)
 public class CategoryServiceImpl implements CategoryService {
 
     private static final Logger logger = LoggerFactory.getLogger(CategoryServiceImpl.class);

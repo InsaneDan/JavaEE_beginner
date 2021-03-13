@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
+import javax.ejb.Stateless;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
@@ -14,8 +15,7 @@ import javax.transaction.UserTransaction;
 import java.io.Serializable;
 import java.util.List;
 
-@Named
-@ApplicationScoped
+@Stateless
 public class UserRepository implements Serializable {
 
     private static final Logger logger = LoggerFactory.getLogger(UserRepository.class);
@@ -23,42 +23,24 @@ public class UserRepository implements Serializable {
     @PersistenceContext(unitName = "ds")
     private EntityManager em;
 
-    @Resource
-    private UserTransaction ut;
-
-    @PostConstruct
-    public void init() throws Exception {
-        if (countAll() == 0) {
-            try {
-                ut.begin();
-
-                saveOrUpdate(new User(1L, "Jhon", "Doe",
-                        "jhon_doe@mail.com", "jhondoeLogin", "jhondoePsw"));
-                saveOrUpdate(new User(2L, "Asdf", "Smith",
-                        "asdf_smith@mail.com", "asdfSmithLogin", "asdfSmithPsw"));
-
-                ut.commit();
-            } catch (Exception ex) {
-                logger.error("", ex);
-                ut.rollback();
-            }
-        }
-    }
-
     public List<User> findAll() {
+        logger.info("findAll");
         return em.createNamedQuery("findAllUsers", User.class).getResultList();
     }
 
     public User findById(Long id) {
+        logger.info("findById");
         return em.find(User.class, id);
     }
 
     public Long countAll() {
+        logger.info("countAll");
         return em.createNamedQuery("countAllUsers", Long.class).getSingleResult();
     }
 
     @Transactional
     public void saveOrUpdate(User user) {
+        logger.info("saveOrUpdate");
         if (user.getId() == null) {
             em.persist(user);
         }
@@ -67,6 +49,7 @@ public class UserRepository implements Serializable {
 
     @Transactional
     public void deleteById(Long id) {
+        logger.info("deleteById");
         em.createNamedQuery("deleteUserById").setParameter("id", id).executeUpdate();
     }
 }

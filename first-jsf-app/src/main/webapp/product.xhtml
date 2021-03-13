@@ -1,7 +1,9 @@
 <html template="/WEB-INF/template.xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets" lang="en">
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      lang="en">
 
 <h:head>
     <ui:include src="WEB-INF/header.xhtml" />
@@ -22,6 +24,7 @@
                 <div class="col-12">
                     <h:commandButton value="Add Product" styleClass="btn btn-primary" action="#{productController.createProduct()}"/>
                 </div>
+
                 <div class="col-12">
                     <h:dataTable value="#{productController.allProducts}" var="product" styleClass="table table-bordered my-2">
                         <h:column>
@@ -56,7 +59,7 @@
                                 <f:ajax event="action" render="productListForm"/>
                             </h:commandLink>
                             <h:commandLink id="AddToCart" styleClass="btn btn-success"
-                                           action="#{cartController.addToCart(product, 1)}">
+                                           action="#{cartController_backup.addToCart(product, 1)}">
                                 <i class="fas fa-cart-plus"></i>
                                 <f:ajax event="action" render="productListForm"/>
                             </h:commandLink>

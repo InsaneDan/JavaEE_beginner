@@ -2,8 +2,7 @@ package ru.geekbrains.persist;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.geekbrains.service.ProductRepr;
-import ru.geekbrains.service.ProductServiceImpl;
+import ru.geekbrains.service.product.ProductRepr;
 
 import javax.persistence.*;
 import javax.validation.constraints.DecimalMin;

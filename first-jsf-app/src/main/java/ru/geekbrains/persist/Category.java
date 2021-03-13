@@ -2,7 +2,7 @@ package ru.geekbrains.persist;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ru.geekbrains.service.CategoryRepr;
+import ru.geekbrains.service.category.CategoryRepr;
 
 import javax.persistence.*;
 import java.util.List;

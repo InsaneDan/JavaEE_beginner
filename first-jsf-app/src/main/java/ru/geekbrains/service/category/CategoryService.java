@@ -1,4 +1,4 @@
-package ru.geekbrains.service;
+package ru.geekbrains.service.category;
 
 import javax.ejb.Local;
 import java.util.List;
