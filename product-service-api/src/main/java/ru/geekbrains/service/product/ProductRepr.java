@@ -1,17 +1,10 @@
 package ru.geekbrains.service.product;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import ru.geekbrains.persist.Product;
-import ru.geekbrains.persist.Category;
-
 import java.io.Serializable;
 import java.math.BigDecimal;
 
 // DTO
 public class ProductRepr implements Serializable {
-
-    private static final Logger logger = LoggerFactory.getLogger(ProductRepr.class);
 
     private Long id;
 
@@ -26,18 +19,15 @@ public class ProductRepr implements Serializable {
     private String categoryName;
 
     public ProductRepr() {
-        logger.info("Default constructor");
     }
 
-    public ProductRepr(Product product) {
-        logger.info("Constructor with product");
-        this.id = product.getId();
-        this.name = product.getName();
-        this.description = product.getDescription();
-        this.price = product.getPrice();
-        Category category = product.getCategory();
-        this.categoryId = category != null ? category.getId() : null;
-        this.categoryName = category != null ? category.getName() : null;
+    public ProductRepr(Long id, String name, String description, BigDecimal price, Long categoryId, String categoryName) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.categoryId = categoryId;
+        this.categoryName = categoryName;
     }
 
     public Long getId() {

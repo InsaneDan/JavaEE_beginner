@@ -12,6 +12,9 @@ public class CartServiceImpl implements CartService {
 
     @Override
     public void addToCart(ProductRepr product, Long quantity) {
+
+        // проверка id: если такой товар есть в таблице - увеличить его количество, если такого id нет - добавить
+
         Long keyId = product.getId();
         for (Map.Entry<ProductRepr, Long> prodEntry : productMap.entrySet()) {
             if (keyId == prodEntry.getKey().getId()) {

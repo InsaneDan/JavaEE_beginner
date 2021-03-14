@@ -2,6 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
     <parent>
         <artifactId>geek-java-ee-01-27</artifactId>
         <groupId>ru.geekbrains</groupId>
@@ -27,11 +28,32 @@
         </dependency>
 
         <dependency>
-            <groupId>ru.geekbrains</groupId>
-            <artifactId>first-jsf-app</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <classifier>classes</classifier>
+            <groupId>org.wildfly</groupId>
+            <artifactId>wildfly-jms-client-bom</artifactId>
+            <type>pom</type>
+            <version>18.0.1.Final</version>
         </dependency>
+
+        <dependency>
+            <groupId>ru.geekbrains</groupId>
+            <artifactId>product-service-api</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+
+        <!-- https://mvnrepository.com/artifact/org.apache.activemq/activemq-client -->
+        <dependency>
+            <groupId>org.apache.activemq</groupId>
+            <artifactId>activemq-client</artifactId>
+            <version>5.16.1</version>
+        </dependency>
+
+
+
+
+
+
+
     </dependencies>
 
     <repositories>

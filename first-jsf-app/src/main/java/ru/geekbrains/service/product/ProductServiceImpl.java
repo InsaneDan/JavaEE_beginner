@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 
 @Stateless
 @Remote(ProductServiceRemote.class)
-public class ProductServiceImpl implements ProductService {
+public class ProductServiceImpl implements ProductService, ProductServiceRemote {
 
     private static final Logger logger = LoggerFactory.getLogger(ProductServiceImpl.class);
 
@@ -28,9 +28,8 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public List<ProductRepr> findAll() {
-        logger.info("findAll");
         return productRepository.findAll().stream()
-                .map(ProductRepr::new)
+                .map(this::buildProductRepr)
                 .collect(Collectors.toList());
     }
 
@@ -63,22 +62,6 @@ public class ProductServiceImpl implements ProductService {
     public Long countAll() {
         logger.info("countAll");
         return productRepository.countAll();
-    }
-
-//    @Override
-    public void insert(ProductRepr product) {
-        if (product.getId() != null) {
-            throw new IllegalArgumentException();
-        }
-        saveOrUpdate(product);
-    }
-
-//    @Override
-    public void update(ProductRepr product) {
-        if (product.getId() == null) {
-            throw new IllegalArgumentException();
-        }
-        saveOrUpdate(product);
     }
 
     @TransactionAttribute
