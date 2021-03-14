@@ -1,48 +1,50 @@
 package ru.geekbrains.persist;
 
-import javax.annotation.PostConstruct;
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Named;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicLong;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-@Named
-@ApplicationScoped
+import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.transaction.Transactional;
+import java.io.Serializable;
+import java.util.List;
+
+@Stateless
 public class UserRepository implements Serializable {
 
-    private final Map<Long, User> usersMap = new ConcurrentHashMap<>();
+    private static final Logger logger = LoggerFactory.getLogger(UserRepository.class);
 
-    private final AtomicLong identity = new AtomicLong(0);
-
-    @PostConstruct
-    public void init() {
-        this.saveOrUpdate(new User(null, "Jhon", "Doe",
-                "jhon_doe@mail.com", "jhondoeLogin", "jhondoePsw"));
-        this.saveOrUpdate(new User(null, "Asdf", "Smith",
-                "asdf_smith@mail.com", "asdfSmithLogin", "asdfSmithPsw"));
-    }
+    @PersistenceContext(unitName = "ds")
+    private EntityManager em;
 
     public List<User> findAll() {
-        return new ArrayList<>(usersMap.values());
+        logger.info("findAll");
+        return em.createNamedQuery("findAllUsers", User.class).getResultList();
     }
 
     public User findById(Long id) {
-        return usersMap.get(id);
+        logger.info("findById");
+        return em.find(User.class, id);
     }
 
+    public Long countAll() {
+        logger.info("countAll");
+        return em.createNamedQuery("countAllUsers", Long.class).getSingleResult();
+    }
+
+    @Transactional
     public void saveOrUpdate(User user) {
+        logger.info("saveOrUpdate");
         if (user.getId() == null) {
-            Long id = identity.incrementAndGet();
-            user.setId(id);
+            em.persist(user);
         }
-        usersMap.put(user.getId(), user);
+        em.merge(user);
     }
 
+    @Transactional
     public void deleteById(Long id) {
-        usersMap.remove(id);
+        logger.info("deleteById");
+        em.createNamedQuery("deleteUserById").setParameter("id", id).executeUpdate();
     }
 }

@@ -5,8 +5,6 @@ import javax.enterprise.context.RequestScoped;
 import javax.faces.annotation.ManagedProperty;
 import java.io.Serializable;
 
-//@Named
-//@SessionScoped
 @ManagedBean (value = "navigateController")
 @RequestScoped
 public class NavigateController implements Serializable {

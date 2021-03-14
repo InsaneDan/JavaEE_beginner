@@ -14,6 +14,8 @@
         <ui:param name="pageName" value="Catalog"/>
     </ui:include>
 
+    <f:event listener="#{categoryController.getData}" type="preRenderView"/>
+
     <div class="container">
         <div class="row py-2">
             <h:form id="categoryListForm">

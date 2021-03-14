@@ -1,31 +1,35 @@
 package ru.geekbrains.persist;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Pattern;
+import ru.geekbrains.service.user.UserRepr;
 
+import javax.persistence.*;
+
+@Entity
+@Table(name = "users")
+@NamedQueries({
+        @NamedQuery(name = "findAllUsers", query = "FROM User"),
+        @NamedQuery(name = "countAllUsers", query = "SELECT COUNT(*) FROM User"),
+        @NamedQuery(name = "deleteUserById", query = "DELETE FROM User u WHERE u.id = :id")
+})
 public class User {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotEmpty(message = "Поле не может быть пустым") // валидация в предметной области // validation by contract
+    @Column(nullable = false)
     private String firstName;
 
-    @NotEmpty(message = "Поле не может быть пустым")
+    @Column(nullable = false)
     private String lastName;
 
-    // валидатор RegExp pattern с тэгом <f:validateRegex pattern="..."> в user_form.xhtml закомментирован
-    @NotEmpty(message = "Поле не может быть пустым")
-    @Email(message = "Неверный формат адреса электронной почты: ${validatedValue}",
-            regexp = "([^.@]+)(\\.[^.@]+)*@([^.@]+\\.)+([^.@]+)")
+    @Column(nullable = false)
     private String email;
 
-    @NotEmpty(message = "Поле не может быть пустым")
+    @Column(nullable = false)
     private String login;
 
-    @NotEmpty(message = "Поле не может быть пустым")
-    @Pattern(message = "Пароль должен обязательно содержать цифры, строчные и заглавные буквы.",
-            regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^\\w\\s]).{6,}")
+    @Column(nullable = false)
     private String password;
 
     public User() {}
@@ -37,6 +41,15 @@ public class User {
         this.email = email;
         this.login = login;
         this.password = password;
+    }
+
+    public User(UserRepr userRepr) {
+        this.id = userRepr.getId();
+        this.firstName = userRepr.getFirstName();
+        this.lastName = userRepr.getLastName();
+        this.email = userRepr.getEmail();
+        this.login = userRepr.getLogin();
+        this.password = userRepr.getPassword();
     }
 
     public Long getId() {
