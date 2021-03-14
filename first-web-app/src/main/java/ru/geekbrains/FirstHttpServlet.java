@@ -6,7 +6,7 @@ import javax.servlet.http.*;
 import java.io.IOException;
 import java.util.Arrays;
 
-@WebServlet(urlPatterns = {"", "/http-servlet/*"})
+@WebServlet(urlPatterns = {"/http-servlet/*"})
 public class FirstHttpServlet extends HttpServlet {
 
     @Override
@@ -46,6 +46,6 @@ public class FirstHttpServlet extends HttpServlet {
 
         resp.getWriter().println("<hr/>");
 
-//        getServletContext().getRequestDispatcher("/footer.html").include(req, resp);    // футер из html-файла
+        getServletContext().getRequestDispatcher("/footer.html").include(req, resp);    // футер из html-файла
     }
 }
