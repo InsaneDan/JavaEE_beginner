@@ -1,8 +1,5 @@
 package ru.geekbrains.persist;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Pattern;
-import org.hibernate.validator.constraints.Length;
 import ru.geekbrains.service.user.UserRepr;
 
 import javax.persistence.*;
@@ -20,25 +17,18 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Length(min = 2)
     @Column(nullable = false)
     private String firstName;
 
-    @Length(min = 2)
     @Column(nullable = false)
     private String lastName;
 
-    @Email(message = "Неверный формат адреса электронной почты: ${validatedValue}",
-            regexp = "([^.@]+)(\\.[^.@]+)*@([^.@]+\\.)+([^.@]+)")
     @Column(nullable = false)
     private String email;
 
-    @Length(min = 2)
     @Column(nullable = false)
     private String login;
 
-    @Pattern(message = "Пароль должен обязательно содержать цифры, строчные и заглавные буквы.",
-            regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^\\w\\s]).{6,}")
     @Column(nullable = false)
     private String password;
 

@@ -1,30 +1,31 @@
 package ru.geekbrains;
 
-
-
 import ru.geekbrains.service.product.ProductRepr;
-import ru.geekbrains.service.product.ProductServiceRemote;
 
+import javax.jms.*;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.Properties;
 
-public class EjbClient {
+public class JmsClient {
 
     public static void main(String[] args) throws IOException, NamingException {
         Context context = createInitialContext();
 
-        String jndiServiceName = "ejb:/first-jsf-app/ProductServiceImpl!ru.geekbrains.service.product.ProductServiceRemote";
-        ProductServiceRemote productService = (ProductServiceRemote) context.lookup(jndiServiceName);
+        ConnectionFactory factory = (ConnectionFactory) context.lookup("jms/RemoteConnectionFactory");
+        JMSContext jmsContext = factory.createContext("jmsUser", "123");
 
-        productService.findAll()
-                .forEach(prod -> System.out.println(prod.getId() + "\t" + prod.getName() + "\t" + prod.getPrice()));
+        Destination dest = (Destination) context.lookup("jms/productQueue");
 
-        System.out.println("\nFind by ID == 7");
-        ProductRepr prod = productService.findById(7L);
-        System.out.println(prod.getId() + "\t" + prod.getName() + "\t" + prod.getPrice());
+        JMSProducer producer = jmsContext.createProducer();
+
+        ObjectMessage om = jmsContext.createObjectMessage(new ProductRepr(null, "Product from JMS", "Product from JMS",
+                new BigDecimal(100), 1L, null));
+
+        producer.send(dest, om);
     }
 
     public static Context createInitialContext() throws IOException, NamingException {
