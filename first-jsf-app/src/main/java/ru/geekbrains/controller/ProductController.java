@@ -1,10 +1,15 @@
 package ru.geekbrains.controller;
 
-import ru.geekbrains.persist.Product;
-import ru.geekbrains.persist.ProductRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import ru.geekbrains.persist.Category;
+import ru.geekbrains.persist.CategoryRepository;
+import ru.geekbrains.service.product.ProductRepr;
+import ru.geekbrains.service.product.ProductService;
 
+import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
-import javax.inject.Inject;
+import javax.faces.event.ComponentSystemEvent;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.util.List;
@@ -13,39 +18,73 @@ import java.util.List;
 @SessionScoped
 public class ProductController implements Serializable {
 
-    @Inject
-    private ProductRepository productRepository;
+    private static final Logger logger = LoggerFactory.getLogger(ProductController.class);
 
-    private Product product;
+    @EJB
+    private CategoryRepository categoryRepository;
 
-    public Product getProduct() {
+    @EJB
+    private ProductService productService;
+
+    private ProductRepr product;
+
+    private List<ProductRepr> products;
+
+    private List<Category> categories;
+
+    public void getData(ComponentSystemEvent cse) {
+        logger.info("getData for categoryRepository");
+        categories = categoryRepository.findAll();
+        logger.info("getData for productService");
+        products = productService.findAll();
+    }
+
+    public ProductRepr getProduct() {
+        logger.info("getProduct");
         return product;
     }
 
-    public void setProduct(Product product) {
+    public void setProduct(ProductRepr product) {
+        logger.info("setProduct");
         this.product = product;
     }
 
     public String createProduct() {
-        this.product = new Product();
+        logger.info("createProduct");
+        this.product = new ProductRepr();
         return "/product_form.xhtml?faces-redirect=true";
     }
 
-    public List<Product> getAllProducts() {
-        return productRepository.findAll();
+    public List<ProductRepr> getAllProducts() {
+        logger.info("getAllProducts");
+        return products;
     }
 
-    public String editProduct(Product product) {
+    public String editProduct(ProductRepr product) {
+        logger.info("editProduct");
         this.product = product;
         return "/product_form.xhtml?faces-redirect=true";
     }
 
-    public void deleteProduct(Product product) {
-        productRepository.deleteById(product.getId());
+    public void deleteProduct(ProductRepr product) {
+        logger.info("deleteProduct");
+        productService.deleteById(product.getId());
     }
 
     public String saveProduct() {
-        productRepository.saveOrUpdate(product);
+        logger.info("saveProduct");
+        productService.saveOrUpdate(product);
         return "/product.xhtml?faces-redirect=true";
     }
+
+    public List<Category> getCategories() {
+        logger.info("getCategories");
+        return categories;
+    }
+
+    public void setCategories(List<Category> categories) {
+        logger.info("setCategories");
+        this.categories = categories;
+    }
+
 }

@@ -1,47 +1,40 @@
 package ru.geekbrains.controller;
 
-import ru.geekbrains.persist.CartRepository;
-import ru.geekbrains.persist.Product;
+import ru.geekbrains.service.cart.CartService;
+import ru.geekbrains.service.product.ProductRepr;
 
+import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
-import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Named
 @SessionScoped
 public class CartController implements Serializable {
 
-    @Inject
-    private CartRepository cartRepository;
+    @EJB
+    private CartService cartService;
 
-    public List<Map.Entry<Product, Long>> getAllCartProducts() {
-        return cartRepository.findAll();
+    public void addToCart(ProductRepr product, Long quantity) {
+        cartService.addToCart(product, quantity);
     }
 
-    public void addToCart(Product product, Long quantity) {
-        cartRepository.saveOrUpdate(product, quantity);
+    public void removeFromCart(ProductRepr product) {
+        cartService.removeFromCart(product);
     }
 
-    public void quantifyCartProduct(Product product, Long quantity) {
-        cartRepository.saveOrUpdate(product, quantity);
+    public List<ProductRepr> getAll() {
+        return new ArrayList<>(cartService.getAll());
     }
 
-    public void removeCartProduct(Product product) {
-        cartRepository.removeFromCart(product);
+    public Long getQuantity(ProductRepr product) {
+        return cartService.getQuantity(product);
     }
 
     public Double getTotalSum() {
-        Double sum = 0D;
-        Long quantity;
-        Double price;
-        for (Map.Entry<Product, Long> order : cartRepository.findAll()) {
-            quantity = order.getValue();
-            price = Double.valueOf(order.getKey().getPrice().toString());
-            sum += quantity * price;
-        }
-        return sum;
+        return cartService.getTotalSum();
     }
+
 }

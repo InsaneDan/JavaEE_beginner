@@ -1,49 +1,53 @@
 package ru.geekbrains.persist;
 
-import javax.annotation.PostConstruct;
-import javax.enterprise.context.ApplicationScoped;
-import javax.inject.Named;
-import java.util.ArrayList;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import java.io.Serializable;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicLong;
 
-@Named
-@ApplicationScoped
-public class CategoryRepository {
+@Stateless
+public class CategoryRepository implements Serializable {
 
-    private final Map<Long, Category> categoryMap = new ConcurrentHashMap<>();
+    private static final Logger logger = LoggerFactory.getLogger(CategoryRepository.class);
 
-    private final AtomicLong identity = new AtomicLong(0);
-
-    @PostConstruct
-    public void init() {
-        this.saveOrUpdate(new Category(null, "Category  1",
-                "Description of category 1"));
-        this.saveOrUpdate(new Category(null, "Category  2",
-                "Description of category 2"));
-        this.saveOrUpdate(new Category(null, "Category  3",
-                "Description of category 3"));
-    }
+    @PersistenceContext(unitName = "ds")
+    private EntityManager em;
 
     public List<Category> findAll() {
-        return new ArrayList<>(categoryMap.values());
+        logger.info("findAll");
+        return em.createNamedQuery("findAllCategories", Category.class).getResultList();
+    }
+
+    public Category getReference(Long id) {
+        logger.info("getReference");
+        return em.getReference(Category.class, id);
     }
 
     public Category findById(Long id) {
-        return categoryMap.get(id);
+        logger.info("findById");
+        return em.find(Category.class, id);
+    }
+
+    public Long countAll() {
+        logger.info("countAll");
+        return em.createNamedQuery("countAllCategories", Long.class).getSingleResult();
     }
 
     public void saveOrUpdate(Category category) {
+        logger.info("saveOrUpdate");
         if (category.getId() == null) {
-            Long id = identity.incrementAndGet();
-            category.setId(id);
+            em.persist(category);
         }
-        categoryMap.put(category.getId(), category);
+        em.merge(category);
     }
 
     public void deleteById(Long id) {
-        categoryMap.remove(id);
+        logger.info("deleteById");
+        em.createNamedQuery("deleteCategoryById").setParameter("id", id).executeUpdate();
     }
+
 }
