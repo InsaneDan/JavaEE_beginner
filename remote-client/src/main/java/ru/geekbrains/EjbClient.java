@@ -24,7 +24,8 @@ public class EjbClient {
 
         System.out.println("\nFind by ID == 7");
         ProductRepr prod = productService.findById(7L);
-        System.out.println(prod.getId() + "\t" + prod.getName() + "\t" + prod.getPrice());
+        System.out.println(prod.getId() + "\t" + prod.getName() + "\t" + prod.getPrice() +
+                "\tCategoryId:" + prod.getCategoryId() + "\t" + prod.getCategoryName());
     }
 
     public static Context createInitialContext() throws IOException, NamingException {
