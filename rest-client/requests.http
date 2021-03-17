@@ -1,0 +1,52 @@
+### Запросы
+
+### Получить список всех продуктов
+GET http://localhost:8080/first-jsf-app/api/v1/product/
+
+### Получить продукт по id
+GET http://localhost:8080/first-jsf-app/api/v1/product/6
+
+### Получить продукт по наименованию
+GET http://localhost:8080/first-jsf-app/api/v1/product/name/ttt
+
+### Получить продукт по id категории
+GET http://localhost:8080/first-jsf-app/api/v1/product/category/1
+
+### Количество наименований товаров
+GET http://localhost:8080/first-jsf-app/api/v1/product/count
+
+### Изменить данные о продукте
+PUT http://localhost:8080/first-jsf-app/api/v1/product/
+Content-Type: application/json
+
+{
+  "id": 6,
+  "categoryId": 1,
+  "description": "Product JAX-RX",
+  "name": "Product JAX-RX",
+  "price": 99
+}
+
+
+### Список всех категорий
+GET http://localhost:8080/first-jsf-app/api/v1/category/
+Content-Type: application/json
+
+
+
+###
+
+### Добавление в базу (insert)
+POST http://localhost:8080/first-jsf-app/api/v1/product/
+Content-Type: application/json
+
+{
+  "name": "REST",
+  "description": "REST",
+  "price": 100,
+  "categoryId": 1,
+  "categoryName": " "
+}
+
+### Удаление из базы (deleteById)
+DELETE http://localhost:8080/first-jsf-app/api/v1/product/delete/11

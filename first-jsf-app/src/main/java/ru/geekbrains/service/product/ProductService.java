@@ -10,6 +10,10 @@ public interface ProductService {
 
     ProductRepr findById(Long id);
 
+    List<ProductRepr> findByName(String name);
+
+    List<ProductRepr> findByCategoryId(Long categoryId);
+
     Long countAll();
 
     void saveOrUpdate(ProductRepr product);

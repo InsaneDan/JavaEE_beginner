@@ -12,6 +12,8 @@ public interface CategoryService {
 
     Long countAll();
 
+    void insert(CategoryRepr category);
+
     void saveOrUpdate(CategoryRepr category);
 
     void deleteById(Long id);

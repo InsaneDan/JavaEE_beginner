@@ -33,6 +33,7 @@
             <version>1.7.25</version>
             <scope>provided</scope>
         </dependency>
+
     </dependencies>
 
     <build>
