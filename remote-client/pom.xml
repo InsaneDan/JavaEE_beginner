@@ -33,14 +33,7 @@
             <version>18.0.1.Final</version>
         </dependency>
 
-        <dependency>
-            <groupId>ru.geekbrains</groupId>
-            <artifactId>product-service-api</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-
-
-
+        <!--              попытки завести jmsClient                 -->
         <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -53,6 +46,13 @@
             <artifactId>slf4j-simple</artifactId>
             <version>2.0.0-alpha1</version>
             <scope>test</scope>
+        </dependency>
+        <!--                          !                               -->
+
+        <dependency>
+            <groupId>ru.geekbrains</groupId>
+            <artifactId>product-service-api</artifactId>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
 
     </dependencies>

@@ -13,6 +13,8 @@ import java.math.BigDecimal;
 @Table(name = "products")
 @NamedQueries({
         @NamedQuery(name = "findAllProducts", query = "FROM Product ORDER BY id"),
+        @NamedQuery(name = "findProductsByName", query = "FROM Product p WHERE p.name = :name ORDER BY p.id ASC"),
+        @NamedQuery(name = "findProductsByCategoryId", query = "SELECT p FROM Product p INNER JOIN p.category c WHERE c.id = :categoryId ORDER BY p.id ASC"),
         @NamedQuery(name = "countAllProducts", query = "SELECT COUNT(*) FROM Product"),
         @NamedQuery(name = "deleteProductById", query = "DELETE FROM Product p WHERE p.id = :id")
 })
@@ -40,11 +42,9 @@ public class Product {
     private Category category;
 
     public Product() {
-        logger.info("Default constructor");
     }
 
     public Product(Long id, String name, String description, BigDecimal price) {
-        logger.info("Constructor with parameters");
         this.id = id;
         this.name = name;
         this.description = description;
@@ -54,7 +54,6 @@ public class Product {
     public Product(ProductRepr productRepr, Category category) {
         this(productRepr.getId(), productRepr.getName(), productRepr.getDescription(), productRepr.getPrice());
         this.category = category;
-        logger.info("Constructor with productRepr");
     }
 
     public Long getId() { return id; }
@@ -88,12 +87,10 @@ public class Product {
     }
 
     public Category getCategory() {
-        logger.info("getCategory");
         return category;
     }
 
     public void setCategory(Category category) {
-        logger.info("setCategory");
         this.category = category;
     }
 }

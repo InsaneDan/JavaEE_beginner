@@ -17,27 +17,29 @@ public class ProductRepository implements Serializable {
     @PersistenceContext(unitName = "ds")
     private EntityManager em;
 
-    public List<Product> findAll(Long ... categoryId) {
-        logger.info("findAll");
-        if (categoryId != null) {
-
-            logger.info("findAll");
-        }
+    public List<Product> findAll() {
         return em.createNamedQuery("findAllProducts", Product.class).getResultList();
     }
 
     public Product findById(Long id) {
-        logger.info("findById");
         return em.find(Product.class, id);
     }
 
+    public List<Product> findByName(String name) {
+        return em.createNamedQuery("findProductsByName", Product.class)
+                .setParameter("name", name).getResultList();
+    }
+
+    public List<Product> findByCategoryId(Long categoryId) {
+        return em.createNamedQuery("findProductsByCategoryId", Product.class)
+                .setParameter("categoryId", categoryId).getResultList();
+    }
+
     public Long countAll() {
-        logger.info("countAll");
         return em.createNamedQuery("countAllProducts", Long.class).getSingleResult();
     }
 
     public void saveOrUpdate(Product product) {
-        logger.info("saveOrUpdate");
         if (product.getId() == null) {
             logger.info("saveOrUpdate - execute EM.PERSIST(product) - start");
             em.persist(product);
@@ -49,7 +51,6 @@ public class ProductRepository implements Serializable {
     }
 
     public void deleteById(Long id) {
-        logger.info("deleteById");
         em.createNamedQuery("deleteProductById").setParameter("id", id).executeUpdate();
     }
 
