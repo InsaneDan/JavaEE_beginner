@@ -34,7 +34,7 @@ Content-Type: application/json
 
 
 
-###
+### ОШИБКИ
 
 ### Добавление в базу (insert)
 POST http://localhost:8080/first-jsf-app/api/v1/product/
