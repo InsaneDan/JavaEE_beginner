@@ -21,7 +21,8 @@
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
                     <!--вариант без передачи параметра pageName - через view.viewId.contains('main') -->
-                    <h:link styleClass="nav-link #{pageName == 'Main' ? 'active' : ''}" value="Главная" outcome="main" />
+                    <h:link styleClass="nav-link #{pageName == 'Main' ? 'active' : ''}"
+                            value="Главная" outcome="main" />
                 </li>
                 <li class="nav-item">
                     <h:link styleClass="nav-link #{pageName == 'Catalog' ? 'active' : ''}"
