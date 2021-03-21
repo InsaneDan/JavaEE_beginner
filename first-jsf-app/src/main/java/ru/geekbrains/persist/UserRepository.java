@@ -4,47 +4,58 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.transaction.Transactional;
 import java.io.Serializable;
 import java.util.List;
 
 @Stateless
 public class UserRepository implements Serializable {
 
-    private static final Logger logger = LoggerFactory.getLogger(UserRepository.class);
+    private final Logger logger = LoggerFactory.getLogger(UserRepository.class);
 
     @PersistenceContext(unitName = "ds")
-    private EntityManager em;
+    protected EntityManager em;
 
-    public List<User> findAll() {
-        logger.info("findAll");
-        return em.createNamedQuery("findAllUsers", User.class).getResultList();
+    public UserRepository() {
     }
 
-    public User findById(Long id) {
-        logger.info("findById");
+    @TransactionAttribute
+    public User saveOrUpdate(User user) {
+        if (user.getId() == null) {
+            em.persist(user);
+            return user;
+        }
+        return em.merge(user);
+    }
+
+    @TransactionAttribute
+    public void delete(int id) {
+        logger.info("Deleting user");
+
+        try {
+            User attached = findById(id);
+            if (attached != null) {
+                em.remove(attached);
+            }
+        } catch (Exception ex) {
+            logger.error("Error with entity class", ex);
+            throw new IllegalStateException(ex);
+        }
+    }
+
+    public User findById(int id) {
         return em.find(User.class, id);
     }
 
-    public Long countAll() {
-        logger.info("countAll");
-        return em.createNamedQuery("countAllUsers", Long.class).getSingleResult();
+    @TransactionAttribute
+    public List<User> getAllUsers() {
+        return em.createQuery("SELECT DISTINCT u FROM User u LEFT JOIN FETCH u.roles", User.class).getResultList();
     }
 
-    @Transactional
-    public void saveOrUpdate(User user) {
-        logger.info("saveOrUpdate");
-        if (user.getId() == null) {
-            em.persist(user);
-        }
-        em.merge(user);
-    }
-
-    @Transactional
-    public void deleteById(Long id) {
-        logger.info("deleteById");
-        em.createNamedQuery("deleteUserById").setParameter("id", id).executeUpdate();
+    public long countAll() {
+        return em.createQuery("select count(*) from User", Long.class)
+                .getSingleResult();
     }
 }

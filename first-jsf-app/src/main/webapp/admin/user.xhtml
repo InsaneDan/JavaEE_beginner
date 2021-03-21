@@ -5,13 +5,13 @@
       lang="en">
 
 <h:head>
-    <ui:include src="WEB-INF/header.xhtml" />
+    <ui:include src="/WEB-INF/header.xhtml" />
     <title>User list</title>
 </h:head>
 
 <h:body>
 
-    <ui:include src="WEB-INF/navbar.xhtml">
+    <ui:include src="/WEB-INF/navbar.xhtml">
         <ui:param name="pageName" value="User"/>
     </ui:include>
 
@@ -28,18 +28,6 @@
                         <h:column>
                             <f:facet name="header">Id</f:facet>
                             #{user.id}
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">First name</f:facet>
-                            #{user.firstName}
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">Last name</f:facet>
-                            #{user.lastName}
-                        </h:column>
-                        <h:column>
-                            <f:facet name="header">E-mail</f:facet>
-                            #{user.email}
                         </h:column>
                         <h:column>
                             <f:facet name="header">Login</f:facet>
@@ -66,7 +54,7 @@
         </div>
     </div>
 
-    <ui:include src="WEB-INF/scripts.xhtml" />
+    <ui:include src="../WEB-INF/scripts.xhtml" />
 
 </h:body>
 </html>

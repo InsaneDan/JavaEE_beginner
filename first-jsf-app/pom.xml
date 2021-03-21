@@ -102,30 +102,18 @@
         </dependency>
 
         <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-simple</artifactId>
-            <version>1.7.21</version>
-        </dependency>
-
-        <!-- https://mvnrepository.com/artifact/org.apache.maven/maven-plugin-api -->
-        <dependency>
-            <groupId>org.apache.maven</groupId>
-            <artifactId>maven-plugin-api</artifactId>
-            <version>3.6.3</version>
-        </dependency>
-
-
-
-        <dependency>
             <groupId>ru.geekbrains</groupId>
             <artifactId>product-service-api</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
+
         <dependency>
-            <groupId>jakarta.jws</groupId>
-            <artifactId>jakarta.jws-api</artifactId>
-            <version>3.0.0</version>
+            <groupId>com.sun.xml.ws</groupId>
+            <artifactId>jaxws-ri</artifactId>
+            <version>2.3.3</version>
+            <type>pom</type>
         </dependency>
+
     </dependencies>
 
     <build>
@@ -140,12 +128,6 @@
 
             <plugin>
                 <artifactId>maven-war-plugin</artifactId>
-                <version>3.3.1</version>
-<!--
-                <configuration>
-                    <archiveClasses>true</archiveClasses>
-                </configuration>
--->
             </plugin>
         </plugins>
     </build>

@@ -1,18 +1,50 @@
 package ru.geekbrains.service.user;
 
-import javax.ejb.Local;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import ru.geekbrains.persist.User;
+import ru.geekbrains.persist.UserRepository;
+
+import javax.ejb.EJB;
+import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
 import java.util.List;
+import java.util.stream.Collectors;
 
-@Local
-public interface UserService {
+@Stateless
+public class UserService {
 
-    List<UserRepr> findAll();
+    private static final Logger logger = LoggerFactory.getLogger(UserService.class);
 
-    UserRepr findById(Long id);
+    @EJB
+    private UserRepository userRepository;
 
-    Long countAll();
+    @TransactionAttribute
+    public void saveOrUpdate(UserRepr user) {
+        User saved = userRepository.saveOrUpdate(new User(user));
+        user.setId(saved.getId());
+    }
 
-    void saveOrUpdate(UserRepr user);
+    @TransactionAttribute
+    public void delete(int id) {
+        userRepository.delete(id);
+    }
 
-    void deleteById(Long id);
+    @TransactionAttribute
+    public UserRepr findById(int id) {
+        return new UserRepr(userRepository.findById(id));
+    }
+
+    @TransactionAttribute
+    public boolean existsById(int id) {
+        return userRepository.findById(id) != null;
+    }
+
+    @TransactionAttribute
+    public List<UserRepr> getAllUsers() {
+        return userRepository.getAllUsers().stream()
+                .map(UserRepr::new)
+                .collect(Collectors.toList());
+    }
+
 }

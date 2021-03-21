@@ -8,7 +8,9 @@ import ru.geekbrains.persist.UserRepository;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.event.ComponentSystemEvent;
+import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpSession;
 import java.io.Serializable;
 import java.util.List;
 
@@ -18,6 +20,9 @@ public class UserController implements Serializable {
 
     private static final Logger logger = LoggerFactory.getLogger(ProductController.class);
 
+    @Inject
+    private HttpSession httpSession;
+
     @EJB
     private UserRepository userRepository;
 
@@ -26,7 +31,7 @@ public class UserController implements Serializable {
     private List<User> users;
 
     public void getData(ComponentSystemEvent cse) {
-        this.users = userRepository.findAll();
+        this.users = userRepository.getAllUsers();
     }
 
     public User getUser() {
@@ -51,12 +56,15 @@ public class UserController implements Serializable {
         return "/user_form.xhtml?faces-redirect=true";
     }
 
-    public void deleteUser(User user) {
-        userRepository.deleteById(user.getId());
-    }
-
     public String saveUser() {
         userRepository.saveOrUpdate(user);
         return "/user.xhtml?faces-redirect=true";
+    }
+
+
+    public String logout() {
+        //HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+        httpSession.invalidate();
+        return "/product.xhtml?faces-redirect=true";
     }
 }

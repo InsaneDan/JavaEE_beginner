@@ -21,24 +21,45 @@
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
                     <!--вариант без передачи параметра pageName - через view.viewId.contains('main') -->
-                    <h:link styleClass="nav-link #{pageName == 'Main' ? 'active' : ''}" value="Главная" outcome="main" />
+                    <h:link styleClass="nav-link #{pageName == 'Main' ? 'active' : ''}"
+                            value="Главная" outcome="/main" />
                 </li>
                 <li class="nav-item">
                     <h:link styleClass="nav-link #{pageName == 'Catalog' ? 'active' : ''}"
-                            value="Каталог" outcome="catalog" />
+                            value="Каталог" outcome="/catalog" />
                 </li>
                 <li class="nav-item">
                     <h:link styleClass="nav-link #{pageName == 'Product' ? 'active' : ''}"
-                            value="Продукт" outcome="product" />
+                            value="Продукт" outcome="/product" />
                 </li>
                 <li class="nav-item">
                     <h:link styleClass="nav-link #{pageName == 'Cart' ? 'active' : ''}"
-                            value="Корзина" outcome="cart" />
+                            value="Корзина" outcome="/cart" />
+                </li>
+
+
+                <li class="nav-item">
+                    <h:link rendered="#{request.isUserInRole('admin')}"
+                            styleClass="nav-link #{pageName == 'User' ? 'active' : ''}"
+                            value="Пользователи" outcome="/admin/user" />
                 </li>
                 <li class="nav-item">
-                    <h:link styleClass="nav-link #{pageName == 'User' ? 'active' : ''}"
-                            value="Пользователи" outcome="user" />
+                    <h:link rendered="#{request.isUserInRole('admin')}"
+                            styleClass="nav-link #{pageName == 'Role' ? 'active' : ''}"
+                            value="Роли" outcome="/admin/role" />
                 </li>
+
+                <li class="nav-item">
+                    <h:form rendered="#{request.userPrincipal != null}">
+                        <h:commandButton action="#{userController.logout()}" value="Logout #{request.userPrincipal.name}" />
+                    </h:form>
+                    <h:link styleClass="nav-link"
+                            rendered="#{request.userPrincipal == null}"
+                            value="Login"
+                            outcome="/login"/>
+                </li>
+
+
             </ul>
 <!--
             <span class="navbar-text">
