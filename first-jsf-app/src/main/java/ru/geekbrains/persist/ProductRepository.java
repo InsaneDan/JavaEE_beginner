@@ -1,8 +1,11 @@
 package ru.geekbrains.persist;
 
+import org.jboss.ejb3.annotation.SecurityDomain;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -10,6 +13,8 @@ import java.io.Serializable;
 import java.util.List;
 
 @Stateless
+@SecurityDomain("servlet-security-quickstart")
+@PermitAll
 public class ProductRepository implements Serializable {
 
     private static final Logger logger = LoggerFactory.getLogger(ProductRepository.class);
@@ -50,6 +55,7 @@ public class ProductRepository implements Serializable {
         logger.info("saveOrUpdate - execute EM.MERGE(product) - end");
     }
 
+    @RolesAllowed("admin")
     public void deleteById(Long id) {
         em.createNamedQuery("deleteProductById").setParameter("id", id).executeUpdate();
     }

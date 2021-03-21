@@ -37,6 +37,12 @@
                             <f:facet name="header">Password</f:facet>
                             #{user.password}
                         </h:column>
+
+                        <h:column>
+                            <f:facet name="header">Roles</f:facet>
+                            #{user.roles}
+                        </h:column>
+
                         <h:column>
                             <f:facet name="header">Actions</f:facet>
                             <h:commandLink id="Edit" styleClass="btn btn-success"

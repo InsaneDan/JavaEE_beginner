@@ -7,6 +7,7 @@ import ru.geekbrains.persist.CategoryRepository;
 import ru.geekbrains.service.product.ProductRepr;
 import ru.geekbrains.service.product.ProductService;
 
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.event.ComponentSystemEvent;
