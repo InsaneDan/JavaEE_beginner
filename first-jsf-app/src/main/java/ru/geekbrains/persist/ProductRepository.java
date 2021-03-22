@@ -44,6 +44,7 @@ public class ProductRepository implements Serializable {
         return em.createNamedQuery("countAllProducts", Long.class).getSingleResult();
     }
 
+    @RolesAllowed("admin")
     public void saveOrUpdate(Product product) {
         if (product.getId() == null) {
             logger.info("saveOrUpdate - execute EM.PERSIST(product) - start");

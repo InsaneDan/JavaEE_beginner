@@ -5,6 +5,7 @@ import ru.geekbrains.service.role.RoleRepr;
 
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 public class UserRepr implements Serializable {
@@ -24,7 +25,7 @@ public class UserRepr implements Serializable {
         this.id = user.getId();
         this.login = user.getLogin();
         this.password = user.getPassword();
-        this.roles = new HashSet<>();
+        this.roles = new LinkedHashSet<>();
         user.getRoles().forEach(r -> this.roles.add(new RoleRepr(r)));
     }
 

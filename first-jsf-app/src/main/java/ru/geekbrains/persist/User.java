@@ -72,9 +72,7 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    public Set<Role> getRoles() {
-        return roles;
-    }
+    public Set<Role> getRoles() { return roles; }
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;

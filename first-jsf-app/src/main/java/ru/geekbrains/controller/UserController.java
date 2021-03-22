@@ -4,6 +4,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.geekbrains.persist.User;
 import ru.geekbrains.persist.UserRepository;
+import ru.geekbrains.service.role.RoleRepr;
+import ru.geekbrains.service.role.RoleService;
+import ru.geekbrains.service.user.UserRepr;
+import ru.geekbrains.service.user.UserService;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
@@ -24,43 +28,47 @@ public class UserController implements Serializable {
     private HttpSession httpSession;
 
     @EJB
-    private UserRepository userRepository;
+    private UserService userService;
+    @EJB
+    private RoleService roleService;
 
-    private User user;
+    private UserRepr user;
 
-    private List<User> users;
+    private List<RoleRepr> roles;
+
+    private List<UserRepr> users;
 
     public void getData(ComponentSystemEvent cse) {
-        this.users = userRepository.getAllUsers();
+        this.roles = roleService.getAllRoles();
+        this.users = userService.getAllUsers();
     }
 
-    public User getUser() {
+    public UserRepr getUser() {
         return user;
     }
 
-    public void setUser(User user) {
+    public void setUser(UserRepr user) {
         this.user = user;
     }
 
     public String createUser() {
-        this.user = new User();
-        return "/user_form.xhtml?faces-redirect=true";
+        this.user = new UserRepr();
+        return "/admin/user_form.xhtml?faces-redirect=true";
     }
 
-    public List<User> getAllUsers() {
-        return users; // возвращаем предварительно загруженный список элементов
+    public List<UserRepr> getAllUsers() {
+        return users;
     }
 
-    public String editUser(User user) {
+    public String editUser(UserRepr user) {
         this.user = user;
-        return "/user_form.xhtml?faces-redirect=true";
+        return "/admin/user_form.xhtml?faces-redirect=true";
     }
 
     public String saveUser() {
-        userRepository.saveOrUpdate(user);
-        return "/user.xhtml?faces-redirect=true";
+        userService.saveOrUpdate(user);
+        return "/admin/user.xhtml?faces-redirect=true";
     }
-
 
     public String logout() {
         //HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);

@@ -21,32 +21,7 @@
             <div class="col-12">
                 <h:form>
                     <input type="hidden" id="id" name="id"/>
-                    <div class="form-group row">
-                        <label>First name</label>
-                        <h:inputText type="text" styleClass="form-control" id="firstName"
-                                     value="#{userController.user.firstName}"
-                                     placeholder="Enter first name"/>
-                        <h:message for = "firstName" style = "color:red" />
-                    </div>
-                    <div class="form-group row">
-                        <label>Last name</label>
-                        <h:inputText type="text" styleClass="form-control" id="lastName"
-                                     value="#{userController.user.lastName}"
-                                     placeholder="Enter last name"/>
-                        <h:message for = "lastName" style = "color:red" />
-                    </div>
-                    <div class="form-group row">
-                        <label>E-mail</label>
-                        <h:inputText type="email" styleClass="form-control" id="email" label="Email"
-                                     value="#{userController.user.email}"
-                                     required="true"  placeholder="Enter e-mail" >
-<!--
-                                     validatorMessage="Email is not valid.">
-                            <f:validateRegex pattern="([^.@]+)(\.[^.@]+)*@([^.@]+\.)+([^.@]+)" />
--->
-                        </h:inputText>
-                        <h:message for = "email" style = "color:red" />
-                    </div>
+
                     <div class="form-group row">
                         <label>Login</label>
                         <h:inputText type="text" styleClass="form-control" id="login"
@@ -62,13 +37,22 @@
                         <h:message for = "password" style = "color:red" />
                     </div>
 
+
+                    <div class="form-group">
+                        <label for="roleSelect">Role</label>
+                        <h:selectManyCheckbox size="1" styleClass="form-control" id="roleSelect"
+                                              value="#{userController.user.roles}">
+                            <f:selectItems value="#{roleController.allRoles}" var="role"
+                                           itemValue="#{role.id}" itemLabel="#{role.name}"
+                                           itemLabelEscaped="true"/>
+                        </h:selectManyCheckbox>
+                    </div>
+
+
                     <div class="d-flex justify-content-between">
                         <h:commandButton value="Submit" styleClass="btn btn-primary"
                                          action="#{userController.saveUser()}"/>
-
-<!--                        <p:commandButton actionListener="#{growlView.showError}" update="growl" value="Error" styleClass="ui-button-danger" style="width: 10rem" />-->
-
-                        <h:link value="Cancel" styleClass="btn btn-outline-primary" outcome="/user.xhtml" />
+                        <h:link value="Cancel" styleClass="btn btn-outline-primary" outcome="/admin/user.xhtml" />
                     </div>
 
                 </h:form>

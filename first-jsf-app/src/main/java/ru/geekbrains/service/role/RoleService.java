@@ -2,17 +2,16 @@ package ru.geekbrains.service.role;
 
 import ru.geekbrains.persist.RoleRepository;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
-import javax.inject.Inject;
-import java.io.Serializable;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Stateless
-public class RoleService implements Serializable {
+public class RoleService {
 
-    @Inject
+    @EJB
     private RoleRepository roleRepository;
 
     @TransactionAttribute
@@ -21,4 +20,5 @@ public class RoleService implements Serializable {
                 .map(RoleRepr::new)
                 .collect(Collectors.toList());
     }
+
 }

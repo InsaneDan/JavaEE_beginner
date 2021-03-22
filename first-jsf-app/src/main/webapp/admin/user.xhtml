@@ -40,7 +40,9 @@
 
                         <h:column>
                             <f:facet name="header">Roles</f:facet>
-                            #{user.roles}
+                                <h:dataTable value="#{user.roles}" var="userRole" class="table-sm table-borderless" >
+                                    <h:column>#{userRole.name}</h:column>
+                                </h:dataTable>
                         </h:column>
 
                         <h:column>
